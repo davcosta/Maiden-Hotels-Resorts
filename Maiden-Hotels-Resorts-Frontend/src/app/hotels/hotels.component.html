@@ -1,0 +1,252 @@
+
+<h2>List of Hotels</h2>
+  <p>Hotels are listed below. As an operator you can add, edit or delete new hotels.</p>
+  <hr>
+  <button type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_hotelModal">Create New hotel</button>            
+  <button type="button" class="btn btn-success text-right mr-1" (click) = "fetchHotels();">Refresh List</button>
+  <hr>
+<!-- Modal Insert-->
+<div class="modal fade" id="new_hotelModal" tabindex="3" role="dialog" aria-labelledby="new_hotelModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <form [formGroup] = "insertForm" (ngSubmit)="onCreateHotel()">
+      <div class="modal-header">
+          <h5 class="modal-title" id="new_hotelModalLabel" >Create New hotel</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="hotelName">Hotel Name:</label>
+          <input type="text" class="form-control" id="insert_hotelName"  formControlName="hotelName" name="hotelName">
+          <span *ngIf="!insertForm.get('hotelName').valid && insertForm.get('hotelName').touched"
+            class="help-block alert-warning">Please enter a valid name!</span>
+        </div>
+        <div class="form-group">
+            <label for="hotelClassification">Classification:</label><br>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input"  formControlName="hotelClassification" name="hotelClassification" id="hotelClassification1" value="1">
+              <label class="custom-control-label" for="hotelClassification1"><img src="../../assets/img/star.jpg" alt="One Star" height="42" width="42"></label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input"  formControlName="hotelClassification" name="hotelClassification" id="hotelClassification2" value="2">
+              <label class="custom-control-label" for="hotelClassification2"><img src="../../assets/img/star2.jpg" alt="Two Star" height="42" width="42"></label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input"  formControlName="hotelClassification" name="hotelClassification" id="hotelClassification3" value="3">
+              <label class="custom-control-label" for="hotelClassification3"><img src="../../assets/img/star3.jpg" alt="Three Star" height="42" width="42"></label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input"  formControlName="hotelClassification" name="hotelClassification" id="hotelClassification4" value="4">
+              <label class="custom-control-label" for="hotelClassification4"><img src="../../assets/img/star4.jpg" alt="For Star" height="42" width="42"></label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input"  formControlName="hotelClassification" name="hotelClassification" id="hotelClassification5" value="5">
+              <label class="custom-control-label" for="hotelClassification5"><img src="../../assets/img/star5.jpg" alt="Five Star" height="42" width="42"></label>
+            </div>
+            <span *ngIf="!insertForm.get('hotelClassification').valid && insertForm.get('hotelClassification').touched"
+              class="help-block alert-warning">Please enter a valid classification!</span>
+        </div>
+        <div class="form-group">
+          <label for="locationList">Select Location:</label>
+          <select class="form-control" id="insert_locationList"  formControlName="hotelLocation" name="hotelLocation">
+              <option>Barcelona, Spain</option>
+              <option>Berlin, Germany</option>
+              <option>Faro, Portugal</option>
+              <option>Frankfurt, Germany</option>
+              <option>Linz, Austria</option>
+              <option>Lisbon, Portugal</option>
+              <option>London, England</option>
+              <option>Lyon, France</option>
+              <option>Madrid, Spain</option>
+              <option>Manchester, England</option>
+              <option>Milan, Italy</option> 
+              <option>Oporto, Portugal</option>
+              <option>Paris, France</option>
+              <option>Rome, Italy</option>
+          </select>
+          <span *ngIf="!insertForm.get('hotelLocation').valid && insertForm.get('hotelLocation').touched"
+            class="help-block alert-warning">Please enter a valid Location!</span>
+        </div>
+        <div class="form-group">
+          <label for="typeList">Select Hotel Type:</label>
+          <select class="form-control" id="insert_typeList"  formControlName="hotelType" name="hotelType">
+              <option>Hotel</option>
+              <option>Hostel</option>
+              <option>Resort</option>
+          </select>
+          <span *ngIf="!insertForm.get('hotelType').valid && insertForm.get('hotelType').touched"
+            class="help-block alert-warning">Please enter a valid Type of Hotel!</span>
+        </div> 
+        
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!insertForm.valid" onclick="$('#new_hotelModal').modal('hide')">Create hotel</button>
+      </div>
+      </form>
+      </div>
+  </div>
+</div>  
+
+<!-- Modal Edit-->
+<div class="modal fade" id="edit_hotelModal" tabindex="3" role="dialog" aria-labelledby="edit_hotelModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <form [formGroup] = "editForm" (ngSubmit)="onUpdateHotel()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="edit_hotelModalLabel">Edit Existing hotel</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+              <input type="hidden" class="form-control"  formControlName="hotelId" name="hotelId" value=""/>
+            </div>
+            <div class="form-group">
+              <label for="edit_hotelName">hotel Name:</label>
+              <input type="text" class="form-control" id="edit_hotelName" formControlName="hotelName"  name="hotelName">
+              <span *ngIf="!editForm.get('hotelName').valid && editForm.get('hotelName').touched"
+              class="help-block alert-warning">Please enter a valid name!</span>
+            </div>
+            <div class="form-group">
+                <label for="hotelClassification">Classification:</label><br>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" class="custom-control-input"  formControlName="hotelClassification" name="hotelClassification" id="hotelClassification1" value="1">
+                  <label class="custom-control-label" for="hotelClassification1"><img src="../../assets/img/star.jpg" alt="One Star" height="42" width="42"></label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" class="custom-control-input"  formControlName="hotelClassification" name="hotelClassification" id="hotelClassification2" value="2">
+                  <label class="custom-control-label" for="hotelClassification2"><img src="../../assets/img/star2.jpg" alt="Two Star" height="42" width="42"></label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" class="custom-control-input"  formControlName="hotelClassification" name="hotelClassification" id="hotelClassification3" value="3">
+                  <label class="custom-control-label" for="hotelClassification3"><img src="../../assets/img/star3.jpg" alt="Three Star" height="42" width="42"></label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" class="custom-control-input"  formControlName="hotelClassification" name="hotelClassification" id="hotelClassification4" value="4">
+                  <label class="custom-control-label" for="hotelClassification4"><img src="../../assets/img/star4.jpg" alt="For Star" height="42" width="42"></label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" class="custom-control-input"  formControlName="hotelClassification" name="hotelClassification" id="hotelClassification5" value="5">
+                  <label class="custom-control-label" for="hotelClassification5"><img src="../../assets/img/star5.jpg" alt="Five Star" height="42" width="42"></label>
+                </div>
+              
+                <span *ngIf="!editForm.get('hotelClassification').valid && editForm.get('hotelClassification').touched"
+                  class="help-block alert-warning">Please enter a valid classification!</span>
+            </div>
+            <div class="form-group">
+              <label for="edit_locationList">Select Location:</label>
+              <select class="form-control" id="edit_locationList"  formControlName="hotelLocation" name="hotelLocation">
+                <option>Barcelona, Spain</option>
+                <option>Berlin, Germany</option>
+                <option>Faro, Portugal</option>
+                <option>Frankfurt, Germany</option>
+                <option>Linz, Austria</option>
+                <option>Lisbon, Portugal</option>
+                <option>London, England</option>
+                <option>Lyon, France</option>
+                <option>Madrid, Spain</option>
+                <option>Manchester, England</option>
+                <option>Milan, Italy</option> 
+                <option>Oporto, Portugal</option>
+                <option>Paris, France</option>
+                <option>Rome, Italy</option>
+              </select>
+              <span *ngIf="!editForm.get('hotelLocation').valid && insertForm.get('hotelLocation').touched"
+              class="help-block alert-warning">Please enter a valid Location!</span>
+            </div>
+            <div class="form-group">
+              <label for="edit_typeList" >Select Hotel Type:</label>
+              <select class="form-control" id="edit_typeList" formControlName="hotelType"  name="hotelType">
+                <option>Hotel</option>
+                <option>Hostel</option>
+                <option>Resort</option>
+              </select>
+            </div>
+            <span *ngIf="!editForm.get('hotelType').valid && editForm.get('hotelType').touched"
+              class="help-block alert-warning">Please enter a valid Hotel Type!</span> 
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid" onclick="$('#edit_hotelModal').modal('hide')">Edit hotel</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+
+<!-- Modal Delete-->
+<div class="modal fade" id="delete_hotelModal" tabindex="3" role="dialog" aria-labelledby="delete_hotelModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <form [formGroup] = "deleteForm" (ngSubmit)="onDeleteHotel()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="delete_hotelModalLabel">Delete hotel</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control"  formControlName="hotelId" name="hotelId" value=""/>
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong> You are about to delete an hotel. Are you sure?
+                  </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger" onclick="$('#delete_hotelModal').modal('hide')">Delete Hotel</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+  <div *ngIf="hotels.length < 1 && !isFetching" class="alert alert-warning">
+    <strong>No hotels found!</strong> Add new hotels using the Create button
+  </div>
+  <div *ngIf="isFetching && !error" class="alert alert-info">
+    <strong>Loading...</strong>
+  </div>
+  <div *ngIf="error" class="alert alert-danger">
+    <h3>Error occurred using the webservices!</h3>
+    <strong>{{ error }}</strong><br>
+    Please contact the coding monkeys.
+    <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
+  </div>
+  <div *ngIf="success" class="alert alert-success">
+      <h3>Success! </h3>
+      <strong>{{ success }}</strong>
+      <button class="btn btn-info float-right mr-1" (click)="onSuccessClose()">Close</button>
+  </div>
+<table class="table table-striped" *ngIf="hotels.length >= 1">
+    <thead>
+      <tr>
+        <th>Hotel ID</th>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Classification</th>
+        <th>Type</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let hotel of hotels; index as i;">
+        <td>{{hotel.id}}</td>
+        <td>{{hotel.name}}</td>
+        <td>{{hotel.location}}</td>
+        <td>{{hotel.classification}}</td>
+        <td>{{hotel.type}}</td>
+        <td>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_hotelModal" (click)="populateEditForm(i)" >Edit</button>
+            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_hotelModal" (click)="populateDeleteForm(i)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
