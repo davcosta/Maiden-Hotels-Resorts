@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { HotelsComponent } from './hotels/hotels.component';
 import { ConstantsService } from './common/services/constants.service';
 import { ServicesComponent } from './services/services.component';
+import { HotelsServicesComponent } from './hotels-services/hotels-services.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HotelsComponent,
-    ServicesComponent
+    ServicesComponent,
+    HotelsServicesComponent
   ],
   imports: [
     BrowserModule,

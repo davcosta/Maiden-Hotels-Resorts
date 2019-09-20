@@ -6,7 +6,7 @@
   <button type="button" class="btn btn-success text-right mr-1" (click) = "fetchHotels();">Refresh List</button>
   <hr>
 <!-- Modal Insert-->
-<div class="modal fade" id="new_hotelModal" tabindex="3" role="dialog" aria-labelledby="new_hotelModalLabel" aria-hidden="true" >
+<div class="modal fade" id="new_hotelModal" tabindex="1" role="dialog" aria-labelledby="new_hotelModalLabel" aria-hidden="true" >
   <div class="modal-dialog" role="document">
       <div class="modal-content">
       <form [formGroup] = "insertForm" (ngSubmit)="onCreateHotel()">
