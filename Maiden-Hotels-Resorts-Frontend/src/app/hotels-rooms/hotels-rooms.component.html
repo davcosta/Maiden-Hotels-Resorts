@@ -1,0 +1,174 @@
+<h2>List of Hotels-Services</h2>
+  <p>Hotels-Services are listed below. As an operator you can add, edit or delete new Hotels-Services.</p>
+  <hr>
+  <button type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_hotelRoomModal">Create New Hotel-Room</button>
+  <button type="button" class="btn btn-success text-right mr-1" (click) = "onRefresh();">Refresh List</button>            
+  <hr>
+<!-- Modal Insert-->
+<div class="modal fade" id="new_hotelRoomModal" tabindex="5" role="dialog" aria-labelledby="new_hotelRoomModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form [formGroup] = "insertForm" (ngSubmit)="onCreateHotelRoom()">
+            <div class="modal-header">
+                <h5 class="modal-title" id="new_hotelRoomModalLabel" >Create New Hotel-Room</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="insert_hotel">Select Hotel:</label>
+                    <select class="form-control" id="insert_hotel"  formControlName="hotelId" name="hotelId">
+                    <option *ngFor="let hotel of hotels; index as i;" value={{i}}>{{hotel.name}}</option>
+                    </select>
+                    <span *ngIf="!insertForm.get('hotelId').valid && insertForm.get('hotelId').touched"
+                    class="help-block alert-warning">Please enter a valid hotel!</span>
+                </div>
+                <div class="form-group">
+                    <label for="insert_room">Select Room:</label>
+                    <select class="form-control" id="insert_room"  formControlName="roomId" name="roomId">
+                    <option *ngFor="let room of rooms; index as i;" value={{i}}>{{service.id}}</option>
+                    </select>
+                    <span *ngIf="!insertForm.get('roomId').valid && insertForm.get('roomId').touched"
+                    class="help-block alert-warning">Please select a valid room!</span>
+                </div>
+                <div class="form-group">
+                        <label for="roomNumber">Room Number:</label>
+                        <input type="text" class="form-control" id="insert_roomNumber"  formControlName="roomNumber" name="roomNumber">
+                        <span *ngIf="!insertForm.get('roomNumber').valid && insertForm.get('roomNumber').touched"
+                          class="help-block alert-warning">Please enter a valid room number!</span>
+                </div>
+                <div class="form-group">
+                        <label for="cost">Room Cost:</label>
+                        <input type="text" class="form-control" id="insert_cost"  formControlName="cost" name="cost">
+                        <span *ngIf="!insertForm.get('cost').valid && insertForm.get('cost').touched"
+                        class="help-block alert-warning">Please enter a valid room cost!</span>
+                </div>
+            </div>  
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!insertForm.valid" onclick="$('#new_hotelRoomModal').modal('hide')">Create Hotel-Room</button>
+            </div>
+        </form>
+    </div>
+    </div>
+</div>  
+
+<!-- Modal Edit-->
+<div class="modal fade" id="edit_hotelRoomModal" tabindex="3" role="dialog" aria-labelledby="edit_hotelRoomModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <form [formGroup] = "editForm" (ngSubmit)="onUpdatehotelRoom()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="edit_hotelRoomModalLabel">Edit Existing Hotel-Service</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+            <div class="modal-body">
+                    <div class="form-group">
+                            <label for="edit_hotel">Select Hotel:</label>
+                            <select class="form-control" id="edit_hotel"  formControlName="hotelId" name="hotelId">
+                            <option *ngFor="let hotel of hotels; index as i;" value={{i}}>{{hotel.name}}</option>
+                            </select>
+                            <span *ngIf="!editForm.get('hotelId').valid && editForm.get('hotelId').touched"
+                            class="help-block alert-warning">Please enter a valid hotel!</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_room">Select Room:</label>
+                            <select class="form-control" id="edit_room"  formControlName="roomId" name="roomId">
+                            <option *ngFor="let room of rooms; index as i;" value={{i}}>{{service.id}}</option>
+                            </select>
+                            <span *ngIf="!editForm.get('roomId').valid && editForm.get('roomId').touched"
+                            class="help-block alert-warning">Please select a valid room!</span>
+                        </div>
+                        <div class="form-group">
+                                <label for="roomNumber">Room Number:</label>
+                                <input type="text" class="form-control" id="edit_roomNumber"  formControlName="roomNumber" name="roomNumber">
+                                <span *ngIf="!editForm.get('roomNumber').valid && editForm.get('roomNumber').touched"
+                                  class="help-block alert-warning">Please enter a valid room number!</span>
+                        </div>
+                        <div class="form-group">
+                                <label for="cost">Room Cost:</label>
+                                <input type="text" class="form-control" id="edit_cost"  formControlName="cost" name="cost">
+                                <span *ngIf="!editForm.get('cost').valid && editForm.get('cost').touched"
+                                class="help-block alert-warning">Please enter a valid room cost!</span>
+                        </div>
+            </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid" onclick="$('#edit_hotelRoomModal').modal('hide')">Edit Hotel-Service</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+
+<!-- Modal Delete-->
+<div class="modal fade" id="delete_hotelRoomModal" tabindex="3" role="dialog" aria-labelledby="delete_hotelRoomModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <form [formGroup] = "deleteForm" (ngSubmit)="onDeleteHotelRoom()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="delete_hotelRoomModalLabel">Delete Hotel-Room</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control"  formControlName="hotelRoomId" name="hotelRoomId" value=""/>
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong> You are about to delete an Hotel-Room. Are you sure?
+                  </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger" onclick="$('#delete_hotelRoomModal').modal('hide')">Delete Hotel-Room</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+  <div *ngIf="hotelsRooms.length < 1 && !isFetching" class="alert alert-warning">
+    <strong>No Hotel-Room found!</strong> Add new Hotel-Room using the Create button
+  </div>
+  <div *ngIf="isFetching && !error" class="alert alert-info">
+    <strong>Loading...</strong>
+  </div>
+  <div *ngIf="error" class="alert alert-danger">
+    <h3>Error occurred using the webservices!</h3>
+    <strong>{{ error }}</strong><br>
+    Please contact the coding monkeys.
+    <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
+  </div>
+  <div *ngIf="success" class="alert alert-success">
+      <h3>Success! </h3>
+      <strong>{{ success }}</strong>
+      <button class="btn btn-info float-right mr-1" (click)="onSuccessClose()">Close</button>
+  </div>
+<table class="table table-striped" *ngIf="hotelsRooms.length >= 1 && !error && fetchedhotelRooms">
+    <thead>
+      <tr>
+        <th>Hotel</th>
+        <th>Room</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let hotelRoom of hotelRooms; index as i">
+        <td>{{hotelRoom.hotel.name}} </td>
+        <td>{{hotelRoom.room.id}}</td>
+        <td>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_hotelRoomModal" (click)="populateEditForm(i)" >Edit</button>
+            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_hotelRoomModal" (click)="populateDeleteForm(i)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
+

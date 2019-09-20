@@ -1,0 +1,250 @@
+
+<h2>List of Rooms</h2>
+<p>Rooms are listed below. As an operator you can add, edit or delete new rooms.</p>
+<hr>
+<button type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_roomModal">Create New Room</button>            
+<button type="button" class="btn btn-success text-right mr-1" (click) = "fetchRooms();">Refresh List</button>
+<hr>
+<!-- Modal Insert-->
+<div class="modal fade" id="new_roomModal" tabindex="1" role="dialog" aria-labelledby="new_roomModalLabel" aria-hidden="true" >
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <form [formGroup] = "insertForm" (ngSubmit)="onCreateRoom()">
+    <div class="modal-header">
+        <h5 class="modal-title" id="new_roomModalLabel" >Create New Room</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+          <label for="roomBeds">Number of beds:</label><br>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds1" value="1">
+            <label class="custom-control-label" for="roomBeds1"><img src="../../assets/img/beds.png" alt="One Bed" height="42" width="42"></label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds2" value="2">
+            <label class="custom-control-label" for="roomBeds2"><img src="../../assets/img/beds2.png" alt="Two Beds" height="42" width="42"></label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds3" value="3">
+            <label class="custom-control-label" for="roomBeds3"><img src="../../assets/img/beds3.png" alt="Three Beds" height="42" width="42"></label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds4" value="4">
+                <label class="custom-control-label" for="roomBeds4"><img src="../../assets/img/beds4.png" alt="Four Beds" height="42" width="42"></label>
+            </div>
+           <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds5" value="5">
+                <label class="custom-control-label" for="roomBeds5"><img src="../../assets/img/beds5.png" alt="Five Beds" height="42" width="42"></label>
+            </div>
+          <span *ngIf="!insertForm.get('roomBeds').valid && insertForm.get('roomBeds').touched"
+            class="help-block alert-warning">Please enter a valid number of Beds!</span>
+      </div>
+      <div class="form-group">
+        <label for="locationList">Number of divisions:</label>
+        <select class="form-control" id="insert_locationList"  formControlName="roomDivisions" name="roomDivisions">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+        </select>
+        <span *ngIf="!insertForm.get('roomDivisions').valid && insertForm.get('roomDivisions').touched"
+          class="help-block alert-warning">Please enter a valid number of divisions!</span>
+      </div>
+      <div class="form-group">
+        <label for="typeList">Select Room Type:</label>
+        <select class="form-control" id="insert_typeList"  formControlName="roomType" name="roomType">
+            <option>Single</option>
+            <option>Double</option>
+            <option>Triple</option>
+            <option>Quad</option>
+            <option>Queen</option>
+            <option>King</option>
+            <option>Twin</option>
+            <option>Double-Double</option>
+            <option>Studio</option>
+            <option>Master Suite</option>
+            <option>Mini-Suite</option>
+            <option>Connecting rooms</option>
+            <option>Adjoining rooms</option>
+            <option>Adjacent rooms</option>
+        </select>
+        <span *ngIf="!insertForm.get('roomType').valid && insertForm.get('roomType').touched"
+          class="help-block alert-warning">Please enter a valid Type of room!</span>
+      </div> 
+      <div class="form-group">
+            <label for="insert_roomSize">Room size:</label>
+            <input type="text" class="form-control" id="insert_roomSize" formControlName="roomSize"  name="roomSize">
+            <span *ngIf="!insertForm.get('roomSize').valid && insertForm.get('roomSize').touched"
+            class="help-block alert-warning">Please enter a valid room size!</span>
+          </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!insertForm.valid" onclick="$('#new_roomModal').modal('hide')">Create Room</button>
+    </div>
+    </form>
+    </div>
+</div>
+</div>  
+
+<!-- Modal Edit-->
+<div class="modal fade" id="edit_roomModal" tabindex="3" role="dialog" aria-labelledby="edit_roomModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <form [formGroup] = "editForm" (ngSubmit)="onUpdateRoom()">
+      <div class="modal-header">
+          <h5 class="modal-title" id="edit_roomModalLabel">Edit Existing room</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+            <div class="form-group">
+                    <label for="roomBeds">Number of beds:</label><br>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds1" value="1">
+                      <label class="custom-control-label" for="roomBeds1"><img src="../../assets/img/beds.png" alt="One Bed" height="42" width="42"></label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds2" value="2">
+                      <label class="custom-control-label" for="roomBeds2"><img src="../../assets/img/beds2.png" alt="Two Beds" height="42" width="42"></label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds3" value="3">
+                      <label class="custom-control-label" for="roomBeds3"><img src="../../assets/img/beds3.png" alt="Three Beds" height="42" width="42"></label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                          <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds4" value="4">
+                          <label class="custom-control-label" for="roomBeds4"><img src="../../assets/img/beds4.png" alt="Four Beds" height="42" width="42"></label>
+                      </div>
+                     <div class="custom-control custom-radio custom-control-inline">
+                          <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds5" value="5">
+                          <label class="custom-control-label" for="roomBeds5"><img src="../../assets/img/beds5.png" alt="Five Beds" height="42" width="42"></label>
+                      </div>
+                    <span *ngIf="!insertForm.get('roomBeds').valid && insertForm.get('roomBeds').touched"
+                      class="help-block alert-warning">Please enter a valid number of Beds!</span>
+                </div>
+            <div class="form-group">
+              <label for="locationList">Number of divisions:</label>
+              <select class="form-control" id="insert_locationList"  formControlName="roomDivisions" name="roomDivisions">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+              </select>
+              <span *ngIf="!editForm.get('roomDivisions').valid && editForm.get('roomDivisions').touched"
+                class="help-block alert-warning">Please enter a valid number of divisions!</span>
+            </div>
+            <div class="form-group">
+              <label for="typeList">Select Room Type:</label>
+              <select class="form-control" id="insert_typeList"  formControlName="roomType" name="roomType">
+                  <option>Single</option>
+                  <option>Double</option>
+                  <option>Triple</option>
+                  <option>Quad</option>
+                  <option>Queen</option>
+                  <option>King</option>
+                  <option>Twin</option>
+                  <option>Double-Double</option>
+                  <option>Studio</option>
+                  <option>Master Suite</option>
+                  <option>Mini-Suite</option>
+                  <option>Connecting rooms</option>
+                  <option>Adjoining rooms</option>
+                  <option>Adjacent rooms</option>
+              </select>
+              <span *ngIf="!editForm.get('roomType').valid && editForm.get('roomType').touched"
+                class="help-block alert-warning">Please enter a valid Type of room!</span>
+            </div> 
+            <div class="form-group">
+                  <label for="edit_roomSize">Room size:</label>
+                  <input type="text" class="form-control" id="edit_roomSize" formControlName="roomSize"  name="roomSize">
+                  <span *ngIf="!editForm.get('roomSize').valid && editForm.get('roomSize').touched"
+                  class="help-block alert-warning">Please enter a valid room size!</span>
+                </div>
+          </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid" onclick="$('#edit_roomModal').modal('hide')">Edit Room</button>
+      </div>
+      </form>
+      </div>
+  </div>
+</div>  
+
+<!-- Modal Delete-->
+<div class="modal fade" id="delete_roomModal" tabindex="3" role="dialog" aria-labelledby="delete_roomModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <form [formGroup] = "deleteForm" (ngSubmit)="onDeleteRoom()">
+      <div class="modal-header">
+          <h5 class="modal-title" id="delete_roomModalLabel">Delete Room</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+              <input type="hidden" class="form-control"  formControlName="roomId" name="roomId" value=""/>
+              <div class="alert alert-warning">
+                  <strong>Warning!</strong> You are about to delete a room. Are you sure?
+                </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-danger" onclick="$('#delete_roomModal').modal('hide')">Delete Room</button>
+      </div>
+      </form>
+      </div>
+  </div>
+</div>  
+<div *ngIf="rooms.length < 1 && !isFetching" class="alert alert-warning">
+  <strong>No rooms found!</strong> Add new rooms using the Create button
+</div>
+<div *ngIf="isFetching && !error" class="alert alert-info">
+  <strong>Loading...</strong>
+</div>
+<div *ngIf="error" class="alert alert-danger">
+  <h3>Error occurred using the webservices!</h3>
+  <strong>{{ error }}</strong><br>
+  Please contact the coding monkeys.
+  <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
+</div>
+<div *ngIf="success" class="alert alert-success">
+    <h3>Success! </h3>
+    <strong>{{ success }}</strong>
+    <button class="btn btn-info float-right mr-1" (click)="onSuccessClose()">Close</button>
+</div>
+<table class="table table-striped" *ngIf="rooms.length >= 1">
+  <thead>
+    <tr>
+      <th>room ID</th>
+      <th>Beds</th>
+      <th>Divisions</th>
+      <th>Type</th>
+      <th>Size</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let room of rooms; index as i;">
+      <td>{{room.id}}</td>
+      <td>{{room.beds}}</td>
+      <td>{{room.divisions}}</td>
+      <td>{{room.type}}</td>
+      <td>{{room.size}}</td>
+      <td>
+          <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_roomModal" (click)="populateEditForm(i)" >Edit</button>
+          <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_roomModal" (click)="populateDeleteForm(i)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+

@@ -8,13 +8,17 @@ import { HotelsComponent } from './hotels/hotels.component';
 import { ConstantsService } from './common/services/constants.service';
 import { ServicesComponent } from './services/services.component';
 import { HotelsServicesComponent } from './hotels-services/hotels-services.component';
+import { RoomsComponent } from './rooms/rooms.component';
+import { HotelsRoomsComponent } from './hotels-rooms/hotels-rooms.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HotelsComponent,
     ServicesComponent,
-    HotelsServicesComponent
+    HotelsServicesComponent,
+    RoomsComponent,
+    HotelsRoomsComponent
   ],
   imports: [
     BrowserModule,
