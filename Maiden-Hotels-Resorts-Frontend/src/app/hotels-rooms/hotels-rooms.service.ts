@@ -36,6 +36,7 @@ export class HotelsRoomsService {
         let data: {
             id: number
         };
+        data = {id: id};
         return this.http.post(this.constants.webServicesUrl +'/HotelsRooms/HotelsRoomsDelete',data);
     }
 

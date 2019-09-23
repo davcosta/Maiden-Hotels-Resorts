@@ -40,6 +40,7 @@ export class RoomsComponent implements OnInit {
 
     this.editForm = new FormGroup({
       'roomId' : new FormControl(null),
+      'roomBeds': new FormControl(null, Validators.required),
       'roomDivisions' : new FormControl(null, Validators.required),
       'roomType' : new FormControl(null, Validators.required),
       'roomSize' : new FormControl(null, Validators.required)

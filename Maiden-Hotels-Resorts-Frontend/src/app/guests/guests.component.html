@@ -1,0 +1,251 @@
+<h2>List of Guests</h2>
+  <p>Guests are listed below. As an operator you can add, edit or delete new guests.</p>
+  <hr>
+  <button type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_guestModal">Create New Guest</button>
+  <button type="button" class="btn btn-success text-right mr-1" (click) = "onRefresh();">Refresh List</button>            
+  <hr>
+<!-- Modal Insert-->
+<div class="modal fade" id="new_guestModal" tabindex="3" guest="dialog" aria-labelledby="new_guestModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" guest="document">
+      <div class="modal-content">
+      <form [formGroup] = "insertForm" (ngSubmit)="onCreateGuest()">
+      <div class="modal-header">
+          <h5 class="modal-title" id="new_guestModalLabel" >Create New Guest</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+              <label for="insert_guestFirstName">First Name:</label>
+              <input type="text" class="form-control" id="insert_guestFirstName"  formControlName="guestFirstName" name="guestFirstName">
+              <span *ngIf="!insertForm.get('guestFirstName').valid && insertForm.get('guestFirstName').touched"
+                class="help-block alert-warning">Please enter a valid first name!</span>
+          </div>
+          <div class="form-group">
+            <label for="insert_guestLastName">Last Name:</label>
+            <input type="text" class="form-control" id="insert_guestLastName"  formControlName="guestLastName" name="guestLastName">
+            <span *ngIf="!insertForm.get('guestLastName').valid && insertForm.get('guestLastName').touched"
+              class="help-block alert-warning">Please enter a valid last name!</span>
+        </div>
+        <div class="form-group">
+          <label for="insert_guestDateBirth">Date of Birth:</label>
+          <input type="date" class="form-control" id="insert_guestDateBirth"  formControlName="guestDateBirth" name="guestDateBirth">
+          <span *ngIf="!insertForm.get('guestDateBirth').valid && insertForm.get('guestDateBirth').touched"
+            class="help-block alert-warning">Please enter a date!</span>
+        </div>
+        <div class="form-group">
+            <label for="insert_guestGender">Select Gender:</label><br>
+            <input type="radio" name="guestGender" id="insert_guestGender1" formControlName="guestGender" value="Male" checked> Male<br>
+            <input type="radio" name="guestGender" id="insert_guestGender2" formControlName="guestGender" value="Female"> Female<br>
+            <span *ngIf="!insertForm.get('guestGender').valid && insertForm.get('guestGender').touched"
+            class="help-block alert-warning">Please enter Gender!</span>
+        </div>
+        <div class="form-group">
+            <label for="insert_guestIdNumber">Identification Number:</label>
+            <input type="text" class="form-control" id="insert_guestIdNumber"  formControlName="guestIdNumber" name="guestIdNumber">
+            <span *ngIf="!insertForm.get('guestIdNumber').valid && insertForm.get('guestIdNumber').touched"
+              class="help-block alert-warning">Please enter a valid Identification Number!</span>
+        </div>
+        <div class="form-group">
+            <label for="insert_guestAddress">Address:</label>
+            <input type="text" class="form-control" id="insert_guestAddress"  formControlName="guestAddress" name="guestAddress">
+            <span *ngIf="!insertForm.get('guestAddress').valid && insertForm.get('guestAddress').touched"
+              class="help-block alert-warning">Please enter a valid Address!</span>
+        </div>
+        <div class="form-group">
+            <label for="insert_guestContactNumber">Contact Number:</label>
+            <input type="text" class="form-control" id="insert_guestContactNumber"  formControlName="guestContactNumber" name="guestContactNumber">
+            <span *ngIf="!insertForm.get('guestContactNumber').valid && insertForm.get('guestContactNumber').touched"
+              class="help-block alert-warning">Please enter a valid Contact Number!</span>
+        </div>
+        <hr>
+        <div class="form-group">
+                <label for="guestEmail">guest email:</label>
+                <input type="text" class="form-control" id="guestEmail"  formControlName="guestEmail" name="guestEmail">
+                <span *ngIf="!insertForm.get('guestEmail').valid && insertForm.get('guestEmail').touched"
+                class="help-block alert-warning">Please enter a valid email!</span>
+        </div>
+        <div class="form-group">
+          <label for="guestStatus">Status:</label>
+          <select class="form-control" id="guestStatus"  formControlName="guestStatus" name="guestStatus">
+              <option>Active</option>
+              <option>Inactive</option>
+            </select>
+          <span *ngIf="!insertForm.get('guestStatus').valid && insertForm.get('guestStatus').touched"
+          class="help-block alert-warning">Please enter a valid Status!</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!insertForm.valid" onclick="$('#new_guestModal').modal('hide')">Create guest</button>
+      </div>
+      </form>
+      </div>
+  </div>
+</div>  
+
+<!-- Modal Edit-->
+<div class="modal fade" id="edit_guestModal" tabindex="3" guest="dialog" aria-labelledby="edit_guestModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" guest="document">
+        <div class="modal-content">
+        <form [formGroup] = "editForm" (ngSubmit)="onUpdateguest()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="edit_guestModalLabel">Edit Existing guest</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="edit_guestId"  formControlWelcomeBonus="guestId" name="guestId">
+            </div>
+            <div class="form-group">
+                <label for="insert_guestFirstName">First Name:</label>
+                <input type="text" class="form-control" id="insert_guestFirstName"  formControlName="guestFirstName" name="guestFirstName">
+                <span *ngIf="!insertForm.get('guestFirstName').valid && insertForm.get('guestFirstName').touched"
+                  class="help-block alert-warning">Please enter a valid first name!</span>
+            </div>
+            <div class="form-group">
+              <label for="insert_guestLastName">Last Name:</label>
+              <input type="text" class="form-control" id="insert_guestLastName"  formControlName="guestLastName" name="guestLastName">
+              <span *ngIf="!insertForm.get('guestLastName').valid && insertForm.get('guestLastName').touched"
+                class="help-block alert-warning">Please enter a valid last name!</span>
+          </div>
+          <div class="form-group">
+            <label for="insert_guestDateBirth">Date of Birth:</label>
+            <input type="date" class="form-control" id="insert_guestDateBirth"  formControlName="guestDateBirth" name="guestDateBirth">
+            <span *ngIf="!insertForm.get('guestDateBirth').valid && insertForm.get('guestDateBirth').touched"
+              class="help-block alert-warning">Please enter a date!</span>
+          </div>
+          <div class="form-group">
+              <label for="insert_guestGender">Select Gender:</label><br>
+              <input type="radio" name="guestGender" id="insert_guestGender1" formControlName="guestGender" value="Male" checked> Male<br>
+              <input type="radio" name="guestGender" id="insert_guestGender2" formControlName="guestGender" value="Female"> Female<br>
+              <span *ngIf="!insertForm.get('guestGender').valid && insertForm.get('guestGender').touched"
+              class="help-block alert-warning">Please enter Gender!</span>
+          </div>
+          <div class="form-group">
+              <label for="insert_guestIdNumber">Identification Number:</label>
+              <input type="text" class="form-control" id="insert_guestIdNumber"  formControlName="guestIdNumber" name="guestIdNumber">
+              <span *ngIf="!insertForm.get('guestIdNumber').valid && insertForm.get('guestIdNumber').touched"
+                class="help-block alert-warning">Please enter a valid Identification Number!</span>
+          </div>
+          <div class="form-group">
+              <label for="insert_guestAddress">Address:</label>
+              <input type="text" class="form-control" id="insert_guestAddress"  formControlName="guestAddress" name="guestAddress">
+              <span *ngIf="!insertForm.get('guestAddress').valid && insertForm.get('guestAddress').touched"
+                class="help-block alert-warning">Please enter a valid Address!</span>
+          </div>
+          <div class="form-group">
+              <label for="insert_guestContactNumber">Contact Number:</label>
+              <input type="text" class="form-control" id="insert_guestContactNumber"  formControlName="guestContactNumber" name="guestContactNumber">
+              <span *ngIf="!insertForm.get('guestContactNumber').valid && insertForm.get('guestContactNumber').touched"
+                class="help-block alert-warning">Please enter a valid Contact Number!</span>
+          </div>
+          <hr>
+          <div class="form-group">
+                  <label for="guestEmail">guest email:</label>
+                  <input type="text" class="form-control" id="guestEmail"  formControlName="guestEmail" name="guestEmail">
+                  <span *ngIf="!insertForm.get('guestEmail').valid && insertForm.get('guestEmail').touched"
+                  class="help-block alert-warning">Please enter a valid email!</span>
+          </div>
+          <div class="form-group">
+            <label for="guestStatus">Status:</label>
+            <select class="form-control" id="guestStatus"  formControlName="guestStatus" name="guestStatus">
+                <option>Active</option>
+                <option>Inactive</option>
+            </select>
+            <span *ngIf="!insertForm.get('guestStatus').valid && insertForm.get('guestStatus').touched"
+            class="help-block alert-warning">Please enter a valid Status!</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid" onclick="$('#edit_guestModal').modal('hide')">Edit guest</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+
+<!-- Modal Delete-->
+<div class="modal fade" id="delete_guestModal" tabindex="3" guest="dialog" aria-labelledby="delete_guestModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" guest="document">
+        <div class="modal-content">
+        <form [formGroup] = "deleteForm" (ngSubmit)="onDeleteGuest()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="delete_guestModalLabel">Delete guest</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control"  formControlName="guestId" name="guestId" value=""/>
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong> You are about to delete a guest. Are you sure?
+                  </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger" onclick="$('#delete_guestModal').modal('hide')">Delete guest</button>
+        </div>
+        </form>
+        </div>
+    </div>
+  </div>  
+  <div *ngIf="guests.length < 1 && !isFetching" class="alert alert-warning">
+    <strong>No guest found!</strong> Add new guest using the Create button
+  </div>
+  <div *ngIf="isFetching && !error" class="alert alert-info">
+    <strong>Loading...</strong>
+  </div>
+  <div *ngIf="error" class="alert alert-danger">
+    <h3>Error occurred using the webservices!</h3>
+    <strong>{{ error }}</strong><br>
+    Please contact the coding monkeys.
+    <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
+  </div>
+  <div *ngIf="success" class="alert alert-success">
+      <h3>Success! </h3>
+      <strong>{{ success }}</strong>
+      <button class="btn btn-info float-right mr-1" (click)="onSuccessClose()">Close</button>
+  </div>
+<table class="table table-striped" *ngIf="guests.length >= 1 && !error">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Gender</th>
+        <th>Date Of Birth</th>
+        <th>ID Number</th>
+        <th>Contact Number</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let guest of guests; index as i">
+        <td>{{guest.firstName}} {{guest.lastName}} </td>
+        <td>{{guest.address}}</td>
+        <td>{{guest.gender}}</td>
+        <td>{{guest.dateOfBirth  | date : "dd-MM-y"}}</td>
+        <td>{{guest.IdNumber}}</td>
+        <td>{{guest.contactNumber}}</td>
+        <td>{{guest.email}}</td>
+        <td>{{guest.status}}</td>
+        <td>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_guestModal" (click)="populateEditForm(i)" >Edit</button>
+            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_guestModal" (click)="populateDeleteForm(i)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
+

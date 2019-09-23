@@ -1,13 +1,74 @@
 <div class="container">
-    <div class="card border-0 shadow my-5">
-        <div class="card-body p-5">
-          <div class="white-text" >
-                <app-hotels></app-hotels>
-                <app-services></app-services>
-                <app-hotels-services></app-hotels-services>
-                <app-rooms></app-rooms>
-                <app-hotels-rooms></app-hotels-rooms>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <div class="nav-side-menu" tabindex="0">
+        <div class="brand">Maiden Hotels & Resorts</div>
+        <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+      
+            <div class="menu-list">
+      
+                <ul id="menu-content" class="menu-content collapse out">
+                    <li>
+                        <a href="#">
+                        <i class="fa fa-home fa-lg"></i> Home
+                        </a>
+                      </li>
+                    <li>
+                      <a href="#">
+                      <i class="fa fa-book fa-lg"></i> Book your hotel!
+                      </a>
+                    </li>
+    
+                    <li  data-toggle="collapse" data-target="#products" class="collapsed">
+                      <a href="#"><i class="fa fa-h-square"></i> Our Hotels <span class="arrow"></span></a>
+                    </li>
+                    <ul class="sub-menu collapse" id="products">
+                        <li><a href="#">Resorts</a></li>
+                        <li><a href="#">Hostels</a></li>
+                        <li><a href="#">Hotels</a></li>
+                    </ul>
+    
+    
+                    <li data-toggle="collapse" data-target="#service" class="collapsed">
+                      <a href="#"><i class="fa fa-globe fa-lg"></i> Our Services <span class="arrow"></span></a>
+                    </li>  
+                    <ul class="sub-menu collapse" id="service">
+                      <li>Restaurants</li>
+                      <li>Spa & Massages</li>
+                      <li>Gyms</li>
+                      <li>Pools</li>
+                    </ul>
+    
+    
+                     <li  data-toggle="collapse" data-target="#login" class="collapsed">
+                      <a href="#"><i class="fa fa-user"></i> Login <span class="arrow"></span></a>
+                    </li>
+                    <ul class="sub-menu collapse" id="login">
+                        <li><a href="#">Backoffice</a></li>
+                        <li><a href="#">Client</a></li>
+                    </ul>
+                    <li  data-toggle="collapse" data-target="#dashboard" class="collapsed">
+                        <a href="#"><i class="fa fa-dashboard"></i> Dashboard <span class="arrow"></span></a>
+                      </li>
+                      <ul class="sub-menu collapse" id="dashboard">
+                          <li><a href="#" routerLinkActive="nav-active" routerLink='/guest'>Manage Guests</a></li>
+                          <li><a href="#" routerLinkActive="nav-active" routerLink='/manage-hotels'>Manage Hotels</a></li>
+                          <li><a href="#" routerLinkActive="nav-active" routerLink='/manage-services'>Manage Services</a></li>
+                          <li><a href="#" routerLinkActive="nav-active" routerLink='/manage-rooms'>Manage Rooms</a></li>
+                          <li><a href="#" routerLinkActive="nav-active" routerLink='/manage-hotels-services'>Manage Hotels-Services</a></li>
+                          <li><a href="#" routerLinkActive="nav-active" routerLink='/manage-hotels-rooms'>Manage Hotels-Rooms</a></li>
+                      </ul>
+                     
+                </ul>
+         </div>
+    </div>
+    
+    <div id="contentRight">
+        <div >
+          <div >
+              <router-outlet></router-outlet>
           </div>
         </div>
     </div>
+    
   </div>
