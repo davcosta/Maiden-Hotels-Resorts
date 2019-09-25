@@ -14,6 +14,7 @@ export class HotelsServicesService {
             hotelId: number,
             serviceId: number
         };
+        data = {hotelId: hotelId, serviceId: serviceId};
         return this.http.post(this.constants.webServicesUrl+'/HotelsServices/HotelsServicesCreate', data);
     }
 
@@ -23,6 +24,7 @@ export class HotelsServicesService {
             hotelId: number,
             serviceId: number
         };
+        data = {id: id, hotelId: hotelId, serviceId: serviceId};
         return this.http.post(this.constants.webServicesUrl+'/HotelsServices/HotelsServicesUpdate', data);
     }
 

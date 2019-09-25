@@ -153,13 +153,17 @@
       <tr>
         <th>Hotel</th>
         <th>Room</th>
+        <th>Room Number</th>
+        <th>Cost</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let hotelRoom of hotelRooms; index as i">
-        <td>{{hotelRoom.hotel.name}} </td>
-        <td>{{hotelRoom.room.id}}</td>
+        <td>{{getHotelByHotelId(hotelRoom.hotelId).name}} </td>
+        <td>{{getRoomByRoomId(hotelRoom.roomId).id}}</td>
+        <td>{{hotelRoom.roomNumber}}</td>
+        <td>{{hotelRoom.cost}}</td>
         <td>
             <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_hotelRoomModal" (click)="populateEditForm(i)" >Edit</button>
             <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_hotelRoomModal" (click)="populateDeleteForm(i)">Delete</button>

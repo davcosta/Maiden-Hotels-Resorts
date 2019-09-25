@@ -10,12 +10,12 @@
                 <ul id="menu-content" class="menu-content collapse out">
                     <li>
                         <a href="#">
-                        <i class="fa fa-home fa-lg"></i> Home
+                        <i class="fa fa-home fa-lg" data-placement="right" title="home page"></i> Home
                         </a>
                       </li>
                     <li>
                       <a href="#">
-                      <i class="fa fa-book fa-lg"></i> Book your hotel!
+                      <i class="fa fa-book fa-lg" data-placement="right" title="Booking your vacation on one of our hotels!"></i> Book your hotel!
                       </a>
                     </li>
     
@@ -23,9 +23,9 @@
                       <a href="#"><i class="fa fa-h-square"></i> Our Hotels <span class="arrow"></span></a>
                     </li>
                     <ul class="sub-menu collapse" id="products">
-                        <li><a href="#">Resorts</a></li>
-                        <li><a href="#">Hostels</a></li>
-                        <li><a href="#">Hotels</a></li>
+                        <li data-placement="right" title="See our resorts"><a href="#">Resorts</a></li>
+                        <li data-placement="right" title="See our hostels"><a href="#">Hostels</a></li>
+                        <li data-placement="right" title="See our hotels"><a href="#">Hotels</a></li>
                     </ul>
     
     
@@ -33,10 +33,10 @@
                       <a href="#"><i class="fa fa-globe fa-lg"></i> Our Services <span class="arrow"></span></a>
                     </li>  
                     <ul class="sub-menu collapse" id="service">
-                      <li>Restaurants</li>
-                      <li>Spa & Massages</li>
-                      <li>Gyms</li>
-                      <li>Pools</li>
+                      <li data-placement="right" title="Information about our restaurants">Restaurants</li>
+                      <li data-placement="right" title="Information about our Spas" >Spa & Massages</li>
+                      <li data-placement="right" title="Information about our Gymns">Gymns</li>
+                      <li data-placement="right" title="Information about our pools" >Pools</li>
                     </ul>
     
     
@@ -44,31 +44,34 @@
                       <a href="#"><i class="fa fa-user"></i> Login <span class="arrow"></span></a>
                     </li>
                     <ul class="sub-menu collapse" id="login">
-                        <li><a href="#">Backoffice</a></li>
-                        <li><a href="#">Client</a></li>
+                        <li data-placement="right" title="Login for employees"><a href="#">Backoffice</a></li>
+                        <li data-placement="right" title="Login for clients"><a href="#">Client</a></li>
                     </ul>
                     <li  data-toggle="collapse" data-target="#dashboard" class="collapsed">
                         <a href="#"><i class="fa fa-dashboard"></i> Dashboard <span class="arrow"></span></a>
                       </li>
                       <ul class="sub-menu collapse" id="dashboard">
-                          <li><a href="#" routerLinkActive="nav-active" routerLink='/guest'>Manage Guests</a></li>
-                          <li><a href="#" routerLinkActive="nav-active" routerLink='/manage-hotels'>Manage Hotels</a></li>
-                          <li><a href="#" routerLinkActive="nav-active" routerLink='/manage-services'>Manage Services</a></li>
-                          <li><a href="#" routerLinkActive="nav-active" routerLink='/manage-rooms'>Manage Rooms</a></li>
-                          <li><a href="#" routerLinkActive="nav-active" routerLink='/manage-hotels-services'>Manage Hotels-Services</a></li>
-                          <li><a href="#" routerLinkActive="nav-active" routerLink='/manage-hotels-rooms'>Manage Hotels-Rooms</a></li>
+                          <li data-toggle="tooltip" data-placement="right" title="Add, edit or remove guests"><a href="#" routerLinkActive="nav-active" routerLink='/manage-guests'>Manage Guests</a></li>
+                          <li data-placement="right" title="Add, edit or remove clients" ><a href="#" routerLinkActive="nav-active" routerLink='/manage-clients'>Manage Clients</a></li>
+                          <li data-placement="right" title="Add, edit or remove hotels"><a href="#" routerLinkActive="nav-active" routerLink='/manage-hotels'>Manage Hotels</a></li>
+                          <li data-placement="right" title="Add, edit or remove services"><a href="#" routerLinkActive="nav-active" routerLink='/manage-services'>Manage Services</a></li>
+                          <li data-placement="right" title="Add, edit or remove rooms"><a href="#" routerLinkActive="nav-active" routerLink='/manage-rooms'>Manage Rooms</a></li>
+                          <li data-placement="right" title="Add, edit or remove services of an hotel"><a href="#" routerLinkActive="nav-active" routerLink='/manage-hotels-services'>Manage Hotels-Services</a></li>
+                          <li data-placement="right" title="Add, edit or remove rooms of an hotel"><a href="#" routerLinkActive="nav-active" routerLink='/manage-hotels-rooms'>Manage Hotels-Rooms</a></li>
                       </ul>
                      
                 </ul>
          </div>
     </div>
     
-    <div id="contentRight">
+    <div id="contentRight" class="w-100 h-100">
         <div >
           <div >
               <router-outlet></router-outlet>
+              
           </div>
         </div>
     </div>
     
   </div>
+  <app-footer class="fixed-bottom"></app-footer>

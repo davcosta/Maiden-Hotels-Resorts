@@ -134,8 +134,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let hotelService of hotelServices; index as i">
-        <td>{{hotelService.hotel.name}} </td>
-        <td>{{hotelService.service.name}}</td>
+        <td>{{getHotelByHotelId(hotelService.hotelId).name}} </td>
+        <td>{{getServiceByServiceId(hotelService.serviceId).name}}</td>
         <td>
             <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_hotelServiceModal" (click)="populateEditForm(i)" >Edit</button>
             <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_hotelServiceModal" (click)="populateDeleteForm(i)">Delete</button>

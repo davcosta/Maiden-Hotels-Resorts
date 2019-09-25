@@ -44,6 +44,7 @@ export class GuestsService {
         status: string){
 
             let data: {
+                id: number,
                 firstName: string,
                 lastName: string,
                 dateBirth: string,
@@ -54,7 +55,7 @@ export class GuestsService {
                 email: string,
                 status: string
             };
-            data = {firstName: firstName, lastName: lastName, dateBirth: dateBirth, gender: gender, idNumber: idNumber, address: address, contactNumber: contactNumber, email: email, status: status};
+            data = {id: id,firstName: firstName, lastName: lastName, dateBirth: dateBirth, gender: gender, idNumber: idNumber, address: address, contactNumber: contactNumber, email: email, status: status};
         return this.http.post(this.constants.webServicesUrl+'/GuestUpdate',data);
     }
 

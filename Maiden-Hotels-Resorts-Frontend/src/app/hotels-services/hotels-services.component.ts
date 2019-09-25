@@ -194,4 +194,12 @@ export class HotelsServicesComponent implements OnInit {
     });
   }
 
+  private getHotelByHotelId(hotelId: number){
+    return this.hotels.find(x => x.id = hotelId);
+  }
+
+  private getServiceByServiceId(serviceId: number){
+    return this.services.find(x => x.id = serviceId);
+  }
+
 }

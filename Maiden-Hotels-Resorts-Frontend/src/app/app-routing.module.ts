@@ -8,13 +8,15 @@ import { HotelsServicesComponent } from './hotels-services/hotels-services.compo
 import { HotelsRoomsComponent } from './hotels-rooms/hotels-rooms.component';
 import { GuestsComponent } from './guests/guests.component';
 import {HomeComponent} from './home/home.component';
+import {ClientsComponent} from './clients/clients.component'
 
 const appRoutes: Routes = [
     {path: '', redirectTo: '/home', pathMatch : 'full'},
     {path: 'home', component: HomeComponent },
     //{path: 'hotels-view', component: HotelsViewComponent },
     //{path: 'hostels-view', component: HostelsViewComponent }, TODO ADD MORE....
-    {path: 'guest', component: GuestsComponent },
+    {path: 'manage-clients', component: ClientsComponent},
+    {path: 'manage-guests', component: GuestsComponent },
     {path: 'manage-hotels', component: HotelsComponent },
     {path: 'manage-rooms', component: RoomsComponent },
     {path: 'manage-services', component: ServicesComponent },

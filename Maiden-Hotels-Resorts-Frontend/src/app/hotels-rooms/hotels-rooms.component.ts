@@ -202,4 +202,12 @@ export class HotelsRoomsComponent implements OnInit {
     });
   }
 
+  private getRoomByRoomId(roomId: number){
+    return this.rooms.find(x => x.id = roomId);
+  }
+
+  private getHotelByHotelId(hotelId: number){
+    return this.hotels.find(x => x.id = hotelId);
+  }
+
 }

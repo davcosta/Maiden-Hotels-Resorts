@@ -13,6 +13,8 @@ import { HotelsRoomsComponent } from './hotels-rooms/hotels-rooms.component';
 import { GuestsComponent } from './guests/guests.component';
 import { DatePipe } from '@angular/common';
 import { HomeComponent } from './home/home.component';
+import { FooterComponent } from './footer/footer.component';
+import { ClientsComponent } from './clients/clients.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { HomeComponent } from './home/home.component';
     RoomsComponent,
     HotelsRoomsComponent,
     GuestsComponent,
-    HomeComponent
+    HomeComponent,
+    FooterComponent,
+    ClientsComponent
   ],
   imports: [
     BrowserModule,
