@@ -59,6 +59,7 @@ export class HotelsComponent implements OnInit {
           hotelClassification: this.hotels[index].classification,
           hotelType: this.hotels[index].type
     });
+    
   }
 
   populateDeleteForm(index: number){
@@ -77,10 +78,12 @@ export class HotelsComponent implements OnInit {
       this.insertForm.value.hotelType).subscribe(responseData => {
         console.log(responseData);
         this.success = "New Hotel Inserted.";
+        this.error ="";
         this.fetchHotels();
     },
     error =>{
         this.error = error.message;
+        this.success = "";
     });
     
   }
@@ -96,10 +99,12 @@ export class HotelsComponent implements OnInit {
         this.editForm.value.hotelType).subscribe(responseData => {
           console.log(responseData);
           this.success = "Hotel Updated.";
+          this.error ="";
           this.fetchHotels();
       },
       error =>{
           this.error = error.message;
+          this.success ="";
       });
   }
 
@@ -112,10 +117,12 @@ export class HotelsComponent implements OnInit {
     this.hotelsService.deleteHotel(this.hotels[index].id).subscribe(responseData => {
       console.log(responseData);
       this.success = "hotel Deleted.";
+      this.error = "";
       this.fetchHotels();
   },
   error =>{
       this.error = error.message;
+      this.success = "";
   });
   }
 
@@ -130,9 +137,11 @@ export class HotelsComponent implements OnInit {
         for (var i = 0, len = data.length; i < len; i++) {
           this.hotels.push(new Hotel(data[i].id, data[i].name, data[i].location, data[i].classification, data[i].type));
         }
+        this.error = "";
       },
       error =>{
           this.error = error.message;
+          
       });
   }
 

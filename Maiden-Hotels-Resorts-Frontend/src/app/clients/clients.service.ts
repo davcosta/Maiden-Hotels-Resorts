@@ -2,33 +2,35 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConstantsService } from '../common/services/constants.service';
 import { Client } from './clients.model';
+import { Guest } from '../guests/guests.model';
 
 @Injectable({providedIn: 'root'})
 export class ClientsService {
 
     constructor(private http: HttpClient, private constants:ConstantsService){}
 
-    createAndStoreClient(guestId: number, password: string, moneySpent: number){
+    createAndStoreClient(guestClient: Guest, idGuest: number, password: string, moneySpent: number){
 
             let data: {
-                guestId: number,
+                guestClient: Guest[],
+                idGuest: number,
                 password: string,
                 moneySpent: number
             };
-            data = {guestId: guestId, password: password, moneySpent: moneySpent};
-        return this.http.post(this.constants.webServicesUrl+'/ClientCreate',data);
+            data = {guestClient: null, idGuest: idGuest, password: password, moneySpent: moneySpent};
+        return this.http.post(this.constants.webServicesUrl+'/Clients/ClientCreate',data);
     }
 
-    updateClient(id: number,guestId: number,
+    updateClient(id: number,idGuest: number,
         password: string){
 
             let data: {
                 id: number,
-                guestId: number,
+                idGuest: number,
                 password: string
             };
-            data = {id: id, guestId: guestId, password: password};
-        return this.http.post(this.constants.webServicesUrl+'/ClientUpdate',data);
+            data = {id: id, idGuest: idGuest, password: password};
+        return this.http.post(this.constants.webServicesUrl+'/Clients/ClientUpdate',data);
     }
 
     deleteClient(id: number){
@@ -36,12 +38,10 @@ export class ClientsService {
             id: number
         }
         data = {id: id};
-        return this.http.post(this.constants.webServicesUrl+'/GuestDelete', data);
+        return this.http.post(this.constants.webServicesUrl+'/Clients/ClientDelete', data);
     }
 
     fetchClients(){
-        return this.http.get<{id: number,guestId: number,
-            password: string,
-            moneySpent: number}[]>(this.constants.webServicesUrl+'/Guests');
+        return this.http.get<Client[]>(this.constants.webServicesUrl+'/Clients');
     }
 }

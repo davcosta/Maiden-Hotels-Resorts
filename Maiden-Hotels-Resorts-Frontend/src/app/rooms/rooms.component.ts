@@ -60,7 +60,7 @@ export class RoomsComponent implements OnInit {
           roomBeds: this.rooms[index].beds,
           roomDivisions: this.rooms[index].divisions,
           roomType: this.rooms[index].type,
-          roomsize: this.rooms[index].size
+          roomSize: this.rooms[index].size
     });
   }
 
@@ -80,10 +80,12 @@ export class RoomsComponent implements OnInit {
       this.insertForm.value.roomSize).subscribe(responseData => {
         console.log(responseData);
         this.success = "New Room Inserted.";
+        this.error ="";
         this.fetchRooms();
     },
     error =>{
         this.error = error.message;
+        this.success ="";
     });
     
   }
@@ -99,10 +101,12 @@ export class RoomsComponent implements OnInit {
         this.editForm.value.roomSize).subscribe(responseData => {
           console.log(responseData);
           this.success = "Room Updated.";
+          this.error ="";
           this.fetchRooms();
       },
       error =>{
           this.error = error.message;
+          this.success ="";
       });
   }
 
@@ -115,10 +119,12 @@ export class RoomsComponent implements OnInit {
     this.roomsService.deleteRoom(this.rooms[index].id).subscribe(responseData => {
       console.log(responseData);
       this.success = "Room Deleted.";
+      this.error="";
       this.fetchRooms();
   },
   error =>{
       this.error = error.message;
+      this.success = "";
   });
   }
 

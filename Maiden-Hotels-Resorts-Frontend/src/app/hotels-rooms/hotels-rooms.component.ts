@@ -7,6 +7,7 @@ import {Room} from '../rooms/rooms.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HotelsRoomsService } from './hotels-rooms.service';
 
+
 @Component({
   selector: 'app-hotels-rooms',
   templateUrl: './hotels-rooms.component.html',
@@ -95,14 +96,17 @@ export class HotelsRoomsComponent implements OnInit {
         console.log(responseData);
         if(responseData == -1){
           this.error = "Something went wrong inserting the hotel-room..."
+          this.success ="";
         }else{
           this.success = "Hotel-room inserted!";
+          this.error ="";
           this.fetchHotelsRooms();
         }
         
       },
       error =>{
           this.error = error.message;
+          this.success ="";
       });
   }
 
@@ -119,10 +123,12 @@ export class HotelsRoomsComponent implements OnInit {
       ).subscribe(responseData => {
         console.log(responseData);
         this.success = "Hotel-room updated!";
+        this.error ="";
         this.fetchHotelsRooms();
       },
       error =>{
           this.error = error.message;
+          this.success = "";
       });
   }
 
@@ -135,10 +141,12 @@ export class HotelsRoomsComponent implements OnInit {
     this.hotelsRoomsService.deleteHotelRoom(this.hotelsRooms[index].id).subscribe(responseData => {
       console.log(responseData);
       this.success = "Hotel-service Deleted!";
+      this.error ="";
       this.fetchHotelsRooms();
     },
     error =>{
         this.error = error.message;
+        this.success = "";
     });
 
   }

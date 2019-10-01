@@ -1,0 +1,102 @@
+
+
+
+
+
+    
+	<div class="card" style="background-color: rgba(255, 255, 255, 0.2);">
+	<div class="container-fluid">
+		<div class="container">
+			<h2 class="text-center text-uppercase" id="title">Maiden Hotels & Spa</h2>
+ 			<hr>
+			<div class="row">
+				<div class="col-md-5">
+ 					<form role="form" [formGroup] = "registerForm" (ngSubmit)="onRegisterClient()">
+						<fieldset>							
+							<p class="text-uppercase pull-center"> SIGN UP:</p>	
+ 							<div class="form-group">
+                                <input type="text" name="registerFirstName" id="firstName" class="form-control input-lg" formControlName="registerFirstName" placeholder="First Name">
+                                <span *ngIf="!registerForm.get('registerFirstName').valid && registerForm.get('registerFirstName').touched"
+                                          class="help-block alert-warning">Please enter your first name</span>
+                            </div>
+                            <div class="form-group">
+                                    <input type="text" name="registerLastName" id="lastName" class="form-control input-lg" formControlName="registerLastName" placeholder="Family Name">
+                                    <span *ngIf="!registerForm.get('registerLastName').valid && registerForm.get('registerLastName').touched"
+                                          class="help-block alert-warning">Please enter your family name</span>
+                            </div>
+                            <div class="form-group">
+                                        <input type="date" class="form-control" id="DateBirth"  formControlName="registerDateBirth" name="registerDateBirth">
+                                        <span *ngIf="!registerForm.get('registerDateBirth').valid && registerForm.get('registerDateBirth').touched"
+                                          class="help-block alert-warning">Please enter your birth date</span>
+                            </div>
+                            <div class="form-group">
+									<label for="registerGender1">Gender:</label><br>
+                                    <input type="radio" name="registerGender" id="register_registerGender1" formControlName="registerGender" value="Male" checked> Male<br>
+                                    <input type="radio" name="registerGender" id="register_registerGender2" formControlName="registerGender" value="Female"> Female<br>
+                                    <span *ngIf="!registerForm.get('registerGender').valid && registerForm.get('registerGender').touched"
+                                    class="help-block alert-warning">Please enter Gender!</span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="register_registerIdNumber"  formControlName="registerIdNumber" name="registerIdNumber" placeholder="Identification number">
+                                    <span *ngIf="!registerForm.get('registerIdNumber').valid && registerForm.get('registerIdNumber').touched"
+                                      class="help-block alert-warning">Please enter a valid Identification Number!</span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="register_registerAddress"  formControlName="registerAddress" name="registerAddress" placeholder="Address">
+                                    <span *ngIf="!registerForm.get('registerAddress').valid && registerForm.get('registerAddress').touched"
+                                      class="help-block alert-warning">Please enter a valid Address!</span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="register_registerContactNumber"  formControlName="registerContactNumber" name="registerContactNumber" placeholder="Contact number">
+                                    <span *ngIf="!registerForm.get('registerContactNumber').valid && registerForm.get('registerContactNumber').touched"
+                                      class="help-block alert-warning">Please enter a valid Contact Number!</span>
+                                </div>    
+							<div class="form-group">
+                                <input type="email" name="email" id="registerEmail" class="form-control input-lg" formControlName="registerEmail" placeholder="Email Address">
+                                <span *ngIf="!registerForm.get('registerEmail').valid && registerForm.get('registerEmail').touched"
+                                      class="help-block alert-warning">Please enter a valid Email</span>
+							</div>
+							<div class="form-group">
+                                <input type="password" name="password" id="registerPassword" class="form-control input-lg" formControlName="registerPassword" placeholder="Password">
+                                <span *ngIf="!registerForm.get('registerPassword').valid && registerForm.get('registerPassword').touched"
+                                      class="help-block alert-warning">Please enter a valid Password</span>
+							</div>
+								<div class="form-group">
+                                <input type="password" name="password2" id="registerPassword2" class="form-control input-lg" formControlName="registerPassword2" placeholder="Retype your password">
+                                <span *ngIf="!registerForm.get('registerPassword2').valid && registerForm.get('registerPassword2').touched"
+                                      class="help-block alert-warning">Please enter the password you typed before</span>
+							</div>
+ 							<div>
+ 									  <input type="submit" class="btn btn-info mr-1"  [disabled]="!registerForm.valid" value="Register">
+ 							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<div class="col-md-2">
+					<!-------null------>
+				</div>
+				
+				<div class="col-md-5">
+ 				 		<form role="form">
+						<fieldset>							
+							<p class="text-uppercase"> Login using your account: </p>	
+ 								
+							<div class="form-group">
+								<input type="email" name="username" id="username" class="form-control input-lg" placeholder="username">
+							</div>
+							<div class="form-group">
+								<input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password">
+							</div>
+							<div>
+								<input type="submit" class="btn btn-info mr-1" value="Sign In">
+							</div>
+								 
+ 						</fieldset>
+						</form>	
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

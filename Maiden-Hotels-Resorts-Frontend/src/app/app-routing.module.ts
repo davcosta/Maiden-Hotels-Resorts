@@ -9,10 +9,14 @@ import { HotelsRoomsComponent } from './hotels-rooms/hotels-rooms.component';
 import { GuestsComponent } from './guests/guests.component';
 import {HomeComponent} from './home/home.component';
 import {ClientsComponent} from './clients/clients.component'
+import {LoginClientComponent} from './login-client/login-client.component'
+import {BookingComponent} from './booking/booking.component';
 
 const appRoutes: Routes = [
     {path: '', redirectTo: '/home', pathMatch : 'full'},
     {path: 'home', component: HomeComponent },
+    {path: 'login-client', component: LoginClientComponent },
+    {path: 'booking', component: BookingComponent },
     //{path: 'hotels-view', component: HotelsViewComponent },
     //{path: 'hostels-view', component: HostelsViewComponent }, TODO ADD MORE....
     {path: 'manage-clients', component: ClientsComponent},

@@ -42,7 +42,7 @@ export class GuestsComponent implements OnInit {
     });
 
     this.editForm = new FormGroup({
-      'GuestId' : new FormControl(null),
+      'guestId' : new FormControl(null),
       'guestFirstName' : new FormControl(null,Validators.required),
       'guestLastName' : new FormControl(null,Validators.required),
       'guestDateBirth' : new FormControl(null,Validators.required),
@@ -71,12 +71,12 @@ export class GuestsComponent implements OnInit {
     
     
         this.editForm.setValue({
-          guestId:index,
+          guestId: index,
           guestFirstName: this.guests[index].firstName,
           guestLastName : this.guests[index].lastName,
-          guestDateBirth : this.datepipe.transform(this.guests[index].dateBirth, 'yyyy-MM-dd'),
+          guestDateBirth : this.datepipe.transform(this.guests[index].dateOfBirth, 'yyyy-MM-dd'),
           guestGender : this.guests[index].gender,
-          guestNumberID : this.guests[index].idNumber,
+          guestIdNumber : this.guests[index].idNumber,
           guestAddress : this.guests[index].address,
           guestContactNumber : this.guests[index].contactNumber,
           guestEmail : this.guests[index].email,
@@ -99,7 +99,7 @@ export class GuestsComponent implements OnInit {
       this.insertForm.value.guestLastName,
       this.insertForm.value.guestDateBirth,
       this.insertForm.value.guestGender,
-      this.insertForm.value.guestNumberID,
+      this.insertForm.value.guestIdNumber,
       this.insertForm.value.guestAddress,
       this.insertForm.value.guestContactNumber,
       this.insertForm.value.guestEmail,
@@ -124,14 +124,14 @@ export class GuestsComponent implements OnInit {
     console.log("onUpdateGuest");
     //send http request
     this.guestsService.updateGuest(
-      this.guests[this.editForm.value.GuestId].id,
+      this.guests[this.editForm.value.guestId].id,
       this.editForm.value.guestFirstName,
       this.editForm.value.guestLastName,
       this.editForm.value.guestDateBirth,
-      this.editForm.value.guestGender,
       this.editForm.value.guestIdNumber,
       this.editForm.value.guestAddress,
       this.editForm.value.guestContactNumber,
+      this.editForm.value.guestGender,
       this.editForm.value.guestEmail,
       this.editForm.value.guestStatus
       ).subscribe(responseData => {
@@ -170,9 +170,8 @@ export class GuestsComponent implements OnInit {
     this.guestsService.fetchGuests().subscribe(guests =>{
       this.isFetching = false;
       this.guests = [];
-        for (var i = 0, len = guests.length; i < len; i++) {
-          this.guests.push(new Guest(guests[i].id, guests[i].firstName, guests[i].lastName, guests[i].dateBirth, guests[i].gender, guests[i].idNumber, guests[i].address, guests[i].contactNumber, guests[i].email, guests[i].status ));
-        }
+      this.guests = guests;
+        console.log(this.guests);
     },
     error =>{
         this.error = error.message;

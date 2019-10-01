@@ -1,9 +1,13 @@
-
-<h2>List of Rooms</h2>
+<div class="card" style="background-color: rgba(255, 255, 255, 0.2);">
+<h2 class="text-uppercase">List of Rooms</h2>
 <p>Rooms are listed below. As an operator you can add, edit or delete new rooms.</p>
 <hr>
-<button type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_roomModal">Create New Room</button>            
-<button type="button" class="btn btn-success text-right mr-1" (click) = "fetchRooms();">Refresh List</button>
+<div class="row">
+    <div class="col-lg-12">
+        <button type="button" class="btn btn-info text-center mr-1 col-2 float-right" data-toggle="modal" data-target="#new_roomModal">Create New Room</button>            
+        <button type="button" class="btn btn-success text-center mr-1 col-2 float-right" (click) = "fetchRooms();">Refresh List</button>
+        </div>
+</div>
 <hr>
 <!-- Modal Insert-->
 <div class="modal fade" id="new_roomModal" tabindex="1" role="dialog" aria-labelledby="new_roomModalLabel" aria-hidden="true" >
@@ -19,25 +23,25 @@
     <div class="modal-body">
       <div class="form-group">
           <label for="roomBeds">Number of beds:</label><br>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds1" value="1">
-            <label class="custom-control-label" for="roomBeds1"><img src="../../assets/img/beds.png" alt="One Bed" height="42" width="42"></label>
+          <div class="custom-control-inline">
+            <input type="radio"   formControlName="roomBeds" name="roomBeds" id="roomBeds1" value="1">
+            <label class="" for="roomBeds1"><img src="../../assets/img/beds.png" alt="One Bed" height="42" width="42"></label>
           </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds2" value="2">
-            <label class="custom-control-label" for="roomBeds2"><img src="../../assets/img/beds2.png" alt="Two Beds" height="42" width="42"></label>
+          <div class="custom-control-inline">
+            <input type="radio"   formControlName="roomBeds" name="roomBeds" id="roomBeds2" value="2">
+            <label class="" for="roomBeds2"><img src="../../assets/img/beds2.png" alt="Two Beds" height="42" width="42"></label>
           </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds3" value="3">
-            <label class="custom-control-label" for="roomBeds3"><img src="../../assets/img/beds3.png" alt="Three Beds" height="42" width="42"></label>
+          <div class="custom-control-inline">
+            <input type="radio"   formControlName="roomBeds" name="roomBeds" id="roomBeds3" value="3">
+            <label class="" for="roomBeds3"><img src="../../assets/img/beds3.png" alt="Three Beds" height="42" width="42"></label>
           </div>
-          <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds4" value="4">
-                <label class="custom-control-label" for="roomBeds4"><img src="../../assets/img/beds4.png" alt="Four Beds" height="42" width="42"></label>
+          <div class="custom-control-inline">
+                <input type="radio"   formControlName="roomBeds" name="roomBeds" id="roomBeds4" value="4">
+                <label class="" for="roomBeds4"><img src="../../assets/img/beds4.png" alt="Four Beds" height="42" width="42"></label>
             </div>
-           <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds5" value="5">
-                <label class="custom-control-label" for="roomBeds5"><img src="../../assets/img/beds5.png" alt="Five Beds" height="42" width="42"></label>
+           <div class="custom-control-inline">
+                <input type="radio"   formControlName="roomBeds" name="roomBeds" id="roomBeds5" value="5">
+                <label class="" for="roomBeds5"><img src="../../assets/img/beds5.png" alt="Five Beds" height="42" width="42"></label>
             </div>
           <span *ngIf="!insertForm.get('roomBeds').valid && insertForm.get('roomBeds').touched"
             class="help-block alert-warning">Please enter a valid number of Beds!</span>
@@ -104,25 +108,25 @@
       <div class="modal-body">
             <div class="form-group">
                     <label for="roomBeds">Number of beds:</label><br>
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds1" value="1">
-                      <label class="custom-control-label" for="roomBeds1"><img src="../../assets/img/beds.png" alt="One Bed" height="42" width="42"></label>
+                    <div class="custom-control-inline">
+                      <input type="radio"   formControlName="roomBeds" name="roomBeds" id="roomBeds1" value="1">
+                      <label class="" for="roomBeds1"><img src="../../assets/img/beds.png" alt="One Bed" height="42" width="42"></label>
                     </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds2" value="2">
-                      <label class="custom-control-label" for="roomBeds2"><img src="../../assets/img/beds2.png" alt="Two Beds" height="42" width="42"></label>
+                    <div class="custom-control-inline">
+                      <input type="radio"   formControlName="roomBeds" name="roomBeds" id="roomBeds2" value="2">
+                      <label class="" for="roomBeds2"><img src="../../assets/img/beds2.png" alt="Two Beds" height="42" width="42"></label>
                     </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds3" value="3">
-                      <label class="custom-control-label" for="roomBeds3"><img src="../../assets/img/beds3.png" alt="Three Beds" height="42" width="42"></label>
+                    <div class="custom-control-inline">
+                      <input type="radio"   formControlName="roomBeds" name="roomBeds" id="roomBeds3" value="3">
+                      <label class="" for="roomBeds3"><img src="../../assets/img/beds3.png" alt="Three Beds" height="42" width="42"></label>
                     </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                          <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds4" value="4">
-                          <label class="custom-control-label" for="roomBeds4"><img src="../../assets/img/beds4.png" alt="Four Beds" height="42" width="42"></label>
+                    <div class="custom-control-inline">
+                          <input type="radio"   formControlName="roomBeds" name="roomBeds" id="roomBeds4" value="4">
+                          <label class="" for="roomBeds4"><img src="../../assets/img/beds4.png" alt="Four Beds" height="42" width="42"></label>
                       </div>
-                     <div class="custom-control custom-radio custom-control-inline">
-                          <input type="radio" class="custom-control-input"  formControlName="roomBeds" name="roomBeds" id="roomBeds5" value="5">
-                          <label class="custom-control-label" for="roomBeds5"><img src="../../assets/img/beds5.png" alt="Five Beds" height="42" width="42"></label>
+                     <div class="custom-control-inline">
+                          <input type="radio"   formControlName="roomBeds" name="roomBeds" id="roomBeds5" value="5">
+                          <label class="" for="roomBeds5"><img src="../../assets/img/beds5.png" alt="Five Beds" height="42" width="42"></label>
                       </div>
                     <span *ngIf="!insertForm.get('roomBeds').valid && insertForm.get('roomBeds').touched"
                       class="help-block alert-warning">Please enter a valid number of Beds!</span>
@@ -212,12 +216,12 @@
   <h3>Error occurred using the webservices!</h3>
   <strong>{{ error }}</strong><br>
   Please contact the coding monkeys.
-  <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
+  
 </div>
 <div *ngIf="success" class="alert alert-success">
     <h3>Success! </h3>
     <strong>{{ success }}</strong>
-    <button class="btn btn-info float-right mr-1" (click)="onSuccessClose()">Close</button>
+    
 </div>
 <table class="table table-striped" *ngIf="rooms.length >= 1">
   <thead>
@@ -244,7 +248,7 @@
     </tr>
   </tbody>
 </table>
-
+</div>
 
 
 

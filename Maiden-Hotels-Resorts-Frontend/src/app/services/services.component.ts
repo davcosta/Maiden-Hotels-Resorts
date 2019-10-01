@@ -65,10 +65,12 @@ export class ServicesComponent implements OnInit {
       this.insertForm.value.serviceName).subscribe(responseData => {
         console.log(responseData);
         this.success = "New Service Inserted.";
+        this.error ="";
         this.fetchServices();
     },
     error =>{
         this.error = error.message;
+        this.success = "";
     });
     
   }
@@ -81,10 +83,12 @@ export class ServicesComponent implements OnInit {
         this.editForm.value.serviceName).subscribe(responseData => {
           console.log(responseData);
           this.success = "Service Updated.";
+          this.error ="";
           this.fetchServices();
       },
       error =>{
           this.error = error.message;
+          this.success;
       });
   }
 

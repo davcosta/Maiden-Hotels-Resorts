@@ -24,12 +24,12 @@ export class ClientsComponent implements OnInit {
   public guests: Guest[] = [ ];
   public clients: Client[] = [ ];
   
-  public fetchedGuests: boolean;
+  public fetchedClients: boolean;
    
   constructor(private datepipe: DatePipe,private clientsService: ClientsService, private guestsService: GuestsService) {}
 
   ngOnInit() {
-
+    this.fetchedClients = false;
     this.onRefresh();
 
     //using Reactive Forms
@@ -52,19 +52,17 @@ export class ClientsComponent implements OnInit {
 
   onRefresh() {
     this.fetchGuests();
-    while(this.fetchedGuests){}
-    this.fetchClients();
   }
 
   
 
   populateEditForm(index: number){
-    console.log("editing Guest id " + this.clients[index].id);
+    console.log("editing Client id " + this.clients[index].id);
     
     
         this.editForm.setValue({
           clientId:index,
-          clientGuestId: this.guests[index].firstName + " " + this.guests[index].lastName,
+          clientGuestId: this.getGuestIndex(this.getGuestByGuestId(this.clients[index].idGuest)),
           clientPassword: this.clients[index].password
         });
 
@@ -80,8 +78,9 @@ export class ClientsComponent implements OnInit {
     console.log("onCreateClient");
     //send http request
     this.clientsService.createAndStoreClient(
-      this.guests[this.insertForm.value.guestId].id,
-      this.insertForm.value.guestPassword,
+      this.getGuestByGuestId(this.guests[this.insertForm.value.clientGuestId].id),
+      this.guests[this.insertForm.value.clientGuestId].id,
+      this.insertForm.value.clientPassword,
       0
      
       ).subscribe(responseData => {
@@ -105,7 +104,7 @@ export class ClientsComponent implements OnInit {
     //send http request
     this.clientsService.updateClient(
       this.clients[this.editForm.value.clientId].id,
-      this.guests[this.editForm.value.guestId].id,
+      this.guests[this.editForm.value.clientGuestId].id,
       this.editForm.value.password
       ).subscribe(responseData => {
         console.log(responseData);
@@ -139,13 +138,14 @@ export class ClientsComponent implements OnInit {
   }
 
   private fetchClients(){
+    this.fetchedClients = false;
     this.isFetching = true;
     this.clientsService.fetchClients().subscribe(clients =>{
       this.isFetching = false;
       this.clients = [];
-        for (var i = 0, len = clients.length; i < len; i++) {
-          this.clients.push(new Client(clients[i].id, clients[i].guestId, clients[i].password, clients[i].moneySpent));
-        }
+      this.clients = clients;
+      console.log(this.clients);
+      this.fetchedClients = true;
     },
     error =>{
         this.error = error.message;
@@ -162,13 +162,15 @@ export class ClientsComponent implements OnInit {
   }
 
   private fetchGuests(){
-    this.fetchedGuests = false;
     this.guestsService.fetchGuests().subscribe(guests =>{
-      this.fetchedGuests = true;
       this.guests = [];
-        for (var i = 0, len = guests.length; i < len; i++) {
-          this.guests.push(new Guest(guests[i].id, guests[i].firstName, guests[i].lastName, guests[i].dateBirth, guests[i].gender, guests[i].idNumber, guests[i].address, guests[i].contactNumber, guests[i].email, guests[i].status ));
-        }
+      for (var i = 0, len = guests.length; i < len; i++) {
+        this.guests.push(new Guest(guests[i].id, guests[i].firstName, guests[i].lastName, guests[i].dateOfBirth, guests[i].gender, guests[i].idNumber, guests[i].address, guests[i].contactNumber, guests[i].email, guests[i].status));
+        console.log("dentro do for: "+guests[i].id + " "+ this.guests[i].id);
+      }
+      //this.guests = guests;
+        console.log("after for: "+this.guests[0].id +" "+this.guests[1].id);
+        this.fetchClients();
     },
     error =>{
         this.error = error.message;
@@ -177,7 +179,12 @@ export class ClientsComponent implements OnInit {
   }
 
   private getGuestByGuestId(guestId: number){
-    return this.guests.find(x => x.id = guestId);
+    console.log(this.guests); 
+    console.log("from getGuestByGuestId: "+guestId);
+    return this.guests.find(x => x.id === guestId);
   }
 
+  private getGuestIndex(guest: Guest){
+      return this.guests.findIndex( x => x.id === guest.id);
+  }
 }

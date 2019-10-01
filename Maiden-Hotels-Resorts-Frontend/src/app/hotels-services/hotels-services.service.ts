@@ -9,23 +9,23 @@ export class HotelsServicesService {
 
     constructor(private http: HttpClient, private constants:ConstantsService){}
 
-    createAndStoreHotelService(hotelId: number, serviceId: number){
+    createAndStoreHotelService(idHotel: number, idService: number){
         let data: {
-            hotelId: number,
-            serviceId: number
+            idHotel: number,
+            idService: number
         };
-        data = {hotelId: hotelId, serviceId: serviceId};
-        return this.http.post(this.constants.webServicesUrl+'/HotelsServices/HotelsServicesCreate', data);
+        data = {idHotel: idHotel, idService: idService};
+        return this.http.post(this.constants.webServicesUrl+'/ServicesHotel/ServicesHotelCreate', data);
     }
 
-    updateHotelService(id: number, hotelId: number, serviceId: number){
+    updateHotelService(id: number, idHotel: number, idService: number){
         let data: {
             id: number,
-            hotelId: number,
-            serviceId: number
+            idHotel: number,
+            idService: number
         };
-        data = {id: id, hotelId: hotelId, serviceId: serviceId};
-        return this.http.post(this.constants.webServicesUrl+'/HotelsServices/HotelsServicesUpdate', data);
+        data = {id: id, idHotel: idHotel, idService: idService};
+        return this.http.post(this.constants.webServicesUrl+'/ServicesHotel/ServicesHotelUpdate', data);
     }
 
     deleteHotelService(id: number){
@@ -33,10 +33,20 @@ export class HotelsServicesService {
             id: number
         };
         data = {id: id};
-        return this.http.post(this.constants.webServicesUrl+'/HotelsServices/HotelsServicesDelete', data);
+        return this.http.post(this.constants.webServicesUrl+'/ServicesHotel/ServicesHotelDelete', data);
     }
 
     fetchHotelsServices(){
-        return this.http.get<{id: number, hotelId: number, serviceId: number}[]>(this.constants.webServicesUrl+'/HotelsServices');
+        return this.http.get<{id: number, idHotel: number, idService: number}[]>(this.constants.webServicesUrl+'/ServicesHotel');
+    }
+
+    getServicesByHotelId(idHotel: number){
+        let data: {
+            id: number,
+            idHotel: number,
+            idService: number
+        };
+        data = {id: null, idHotel: idHotel, idService: null};
+        return this.http.post<{id: number, idHotel: number, idService: number}[]>(this.constants.webServicesUrl+'/ServicesHotel/ServicesHotelByParam',data);
     }
 }

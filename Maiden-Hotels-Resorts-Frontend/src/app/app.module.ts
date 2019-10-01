@@ -15,6 +15,10 @@ import { DatePipe } from '@angular/common';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { ClientsComponent } from './clients/clients.component';
+import { LoginClientComponent } from './login-client/login-client.component';
+import { BookingComponent } from './booking/booking.component';
+import {AgmCoreModule, GoogleMapsAPIWrapper} from '@agm/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -27,16 +31,20 @@ import { ClientsComponent } from './clients/clients.component';
     GuestsComponent,
     HomeComponent,
     FooterComponent,
-    ClientsComponent
+    ClientsComponent,
+    LoginClientComponent,
+    BookingComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule,
+    AgmCoreModule.forRoot({apiKey:'AIzaSyCYXcUfC6UfsTy9ZVxp7mWMklLb9_saYqM'})
   ],
-  providers: [ConstantsService, DatePipe],
+  providers: [ConstantsService, DatePipe, GoogleMapsAPIWrapper],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

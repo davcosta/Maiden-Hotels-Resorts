@@ -1,8 +1,13 @@
-<h2>List of Hotels-Services</h2>
+<div class="card" style="background-color: rgba(255, 255, 255, 0.2);">
+<h2 class="text-uppercase">List of Hotels-Services</h2>
   <p>Hotels-Services are listed below. As an operator you can add, edit or delete new Hotels-Services.</p>
   <hr>
-  <button type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_hotelServiceModal">Create New hotelService</button>
-  <button type="button" class="btn btn-success text-right mr-1" (click) = "onRefresh();">Refresh List</button>            
+  <div class="row">
+      <div class="col-lg-12">
+          <button type="button" class="btn btn-info text-center mr-1 col-3 float-right" data-toggle="modal" data-target="#new_hotelServiceModal">Create New Hotel-Service</button>            
+          <button type="button" class="btn btn-success text-center mr-1 col-2 float-right" (click) = "fetchServices();">Refresh List</button>
+          </div>
+  </div>       
   <hr>
 <!-- Modal Insert-->
 <div class="modal fade" id="new_hotelServiceModal" tabindex="3" role="dialog" aria-labelledby="new_hotelServiceModalLabel" aria-hidden="true" >
@@ -18,18 +23,18 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="insert_hotel">Select Hotel:</label>
-                    <select class="form-control" id="insert_hotel"  formControlName="hotelId" name="hotelId">
+                    <select class="form-control" id="insert_hotel"  formControlName="idHotel" name="idHotel">
                     <option *ngFor="let hotel of hotels; index as i;" value={{i}}>{{hotel.name}}</option>
                     </select>
-                    <span *ngIf="!insertForm.get('hotelId').valid && insertForm.get('hotelId').touched"
+                    <span *ngIf="!insertForm.get('idHotel').valid && insertForm.get('idHotel').touched"
                     class="help-block alert-warning">Please enter a valid hotel!</span>
                 </div>
                 <div class="form-group">
                     <label for="insert_service">Select Service:</label>
-                    <select class="form-control" id="insert_service"  formControlName="serviceId" name="serviceId">
+                    <select class="form-control" id="insert_service"  formControlName="idService" name="idService">
                     <option *ngFor="let service of services; index as i;" value={{i}}>{{service.name}}</option>
                     </select>
-                    <span *ngIf="!insertForm.get('serviceId').valid && insertForm.get('serviceId').touched"
+                    <span *ngIf="!insertForm.get('idService').valid && insertForm.get('idService').touched"
                     class="help-block alert-warning">Please enter a valid service!</span>
                 </div>
             </div>  
@@ -56,18 +61,18 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="edit_hotel">Select Hotel:</label>
-                    <select class="form-control" id="edit_hotel"  formControlName="hotelId" name="hotelId">
+                    <select class="form-control" id="edit_hotel"  formControlName="idHotel" name="idHotel">
                       <option *ngFor="let hotel of hotels; index as i;" value={{i}}>{{hotel.name}}</option>
                     </select>
-                    <span *ngIf="!editForm.get('hotelId').valid && editForm.get('hotelId').touched"
+                    <span *ngIf="!editForm.get('idHotel').valid && editForm.get('idHotel').touched"
                       class="help-block alert-warning">Please enter a valid hotel!</span>
                 </div>
                 <div class="form-group">
                     <label for="edit_service">Select Service:</label>
-                    <select class="form-control" id="edit_service"  formControlName="serviceId" name="serviceId">
+                    <select class="form-control" id="edit_service"  formControlName="idService" name="idService">
                       <option *ngFor="let service of services; index as i;" value={{i}}>{{service.name}}</option>
                     </select>
-                    <span *ngIf="!editForm.get('serviceId').valid && editForm.get('serviceId').touched"
+                    <span *ngIf="!editForm.get('idService').valid && editForm.get('idService').touched"
                       class="help-block alert-warning">Please enter a valid service!</span>
                 </div>
             </div>
@@ -93,7 +98,7 @@
         </div>
         <div class="modal-body">
             <div class="form-group">
-                <input type="hidden" class="form-control"  formControlName="hotelServiceId" name="hotelServiceId" value=""/>
+                <input type="hidden" class="form-control"  formControlName="idHotelService" name="idHotelService" value=""/>
                 <div class="alert alert-warning">
                     <strong>Warning!</strong> You are about to delete an Hotel-Service. Are you sure?
                   </div>
@@ -106,7 +111,46 @@
         </form>
         </div>
     </div>
-  </div>  
+  </div>
+
+  <!-- Modal List of services-->
+  <div class="modal fade" id="read_hotelServicesModal" tabindex="3" role="dialog" aria-labelledby="read_hotelServicesModalLabel" aria-hidden="true" >
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+          <form [formGroup] = "readServicesForm" (ngSubmit)="onUpdateHotelService()">
+          <div class="modal-header">
+              <h5 class="modal-title" id="read_hotelServicesModalLabel">List of Services in ..</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+              <div class="modal-body">
+                  <table class="table table-striped" *ngIf="servicesFromHotel.length >= 1 && !error && fetchedHotelServices">
+                      <thead>
+                        <tr>
+                          <th>Service</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let serviceFromHotel of servicesFromHotel; index as i">
+                          <td> {{getServiceByIdService(serviceFromHotel.idService).name}} </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <input type="hidden" class="form-control"  formControlName="idHotel" name="idHotel" value=""/>
+              </div>
+              
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" [disabled]="!readServicesForm.valid" onclick="$('#edit_hotelServiceModal').modal('hide')">Edit Hotel-Service</button>
+              
+          </div>
+          </form>
+          </div>
+      </div>
+    </div> 
+
+  
   <div *ngIf="hotelsServices.length < 1 && !isFetching" class="alert alert-warning">
     <strong>No Hotel-Service found!</strong> Add new Hotel-Service using the Create button
   </div>
@@ -117,14 +161,14 @@
     <h3>Error occurred using the webservices!</h3>
     <strong>{{ error }}</strong><br>
     Please contact the coding monkeys.
-    <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
+    
   </div>
   <div *ngIf="success" class="alert alert-success">
       <h3>Success! </h3>
       <strong>{{ success }}</strong>
-      <button class="btn btn-info float-right mr-1" (click)="onSuccessClose()">Close</button>
+      
   </div>
-<table class="table table-striped" *ngIf="hotelsServices.length >= 1 && !error && fetchedhotelServiceTypes">
+<table class="table table-striped" *ngIf="hotels.length >= 1 && !error && fetchedHotels && fetchedServices">
     <thead>
       <tr>
         <th>Hotel</th>
@@ -133,9 +177,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let hotelService of hotelServices; index as i">
-        <td>{{getHotelByHotelId(hotelService.hotelId).name}} </td>
-        <td>{{getServiceByServiceId(hotelService.serviceId).name}}</td>
+      <tr *ngFor="let hotel of hotels; index as i">
+        <td>{{hotel.name}} </td>
+        <td><button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#read_hotelServicesModal" (click)="populateReadServicesForm(i)" >See List</button></td>
         <td>
             <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_hotelServiceModal" (click)="populateEditForm(i)" >Edit</button>
             <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_hotelServiceModal" (click)="populateDeleteForm(i)">Delete</button>
@@ -143,7 +187,7 @@
       </tr>
     </tbody>
   </table>
-
+</div>
 
 
 

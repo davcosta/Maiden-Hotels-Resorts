@@ -1,9 +1,13 @@
-
-<h2>List of Services</h2>
+<div class="card" style="background-color: rgba(255, 255, 255, 0.2);">
+<h2 class="text-uppercase">List of Services</h2>
 <p>Services are listed below. As an operator you can add, edit or delete new services.</p>
 <hr>
-<button type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_serviceModal">Create New Service</button>            
-<button type="button" class="btn btn-success text-right mr-1" (click) = "fetchServices();">Refresh List</button>
+<div class="row">
+    <div class="col-lg-12">
+        <button type="button" class="btn btn-info text-center mr-1 col-2 float-right" data-toggle="modal" data-target="#new_serviceModal">Create New Service</button>            
+        <button type="button" class="btn btn-success text-center mr-1 col-2 float-right" (click) = "fetchServices();">Refresh List</button>
+        </div>
+</div>
 <hr>
 <!-- Modal Insert-->
 <div class="modal fade" id="new_serviceModal" tabindex="2" role="dialog" aria-labelledby="new_serviceModalLabel" aria-hidden="true" >
@@ -102,18 +106,19 @@
   <h3>Error occurred using the webservices!</h3>
   <strong>{{ error }}</strong><br>
   Please contact the coding monkeys.
-  <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
+  
 </div>
 <div *ngIf="success" class="alert alert-success">
     <h3>Success! </h3>
     <strong>{{ success }}</strong>
-    <button class="btn btn-info float-right mr-1" (click)="onSuccessClose()">Close</button>
+    
 </div>
 <table class="table table-striped" *ngIf="services.length >= 1">
   <thead>
     <tr>
       <th>Service ID</th>
       <th>Name</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -121,12 +126,12 @@
       <td>{{service.id}}</td>
       <td>{{service.name}}</td>
       <td>
-          <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_serviceModal" (click)="populateEditForm(i)" >Edit</button>
-          <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_serviceModal" (click)="populateDeleteForm(i)">Delete</button>
+          <button class="btn btn-info mb-2 mr-2 col-4 btn-block" data-toggle="modal" data-target="#edit_serviceModal" (click)="populateEditForm(i)" >Edit</button>
+          <button class="btn btn-danger mb-2 mr-2 col-4 btn-block" data-toggle="modal" data-target="#delete_serviceModal" (click)="populateDeleteForm(i)">Delete</button>
       </td>
     </tr>
   </tbody>
 </table>
-
+</div>
 
 

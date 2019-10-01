@@ -1,11 +1,11 @@
 export class HotelService {
     public id: number;
-    public hotelId: number;
-    public serviceId: number;
+    public idHotel: number;
+    public idService: number;
 
-    constructor (id:number, hotelId: number, serviceId: number){
+    constructor (id:number, idHotel: number, idService: number){
         this.id = id;
-        this.hotelId = hotelId;
-        this.serviceId = serviceId;
+        this.idHotel = idHotel;
+        this.idService = idService;
     }
 }

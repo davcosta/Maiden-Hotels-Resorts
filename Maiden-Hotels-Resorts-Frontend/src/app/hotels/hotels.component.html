@@ -1,9 +1,14 @@
 
-<h2>List of Hotels</h2>
+<div class="card" style="background-color: rgba(255, 255, 255, 0.2);">
+<h2 class="text-uppercase">List of Hotels</h2>
   <p>Hotels are listed below. As an operator you can add, edit or delete new hotels.</p>
   <hr>
-  <button type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_hotelModal">Create New hotel</button>            
-  <button type="button" class="btn btn-success text-right mr-1" (click) = "fetchHotels();">Refresh List</button>
+  <div class="row">
+      <div class="col-lg-12">
+          <button type="button" class="btn btn-info text-center mr-1 col-2 float-right" data-toggle="modal" data-target="#new_hotelModal">Create New hotel</button>            
+          <button type="button" class="btn btn-success text-center mr-1 col-2 float-right" (click) = "fetchHotels();">Refresh List</button>
+          </div>
+</div>
   <hr>
 <!-- Modal Insert-->
 <div class="modal fade" id="new_hotelModal" tabindex="1" role="dialog" aria-labelledby="new_hotelModalLabel" aria-hidden="true" >
@@ -113,25 +118,25 @@
             </div>
             <div class="form-group">
                 <label for="hotelClassification">Classification:</label><br>
-                <div class="custom-control custom-radio custom-control-inline">
-                  <input type="radio" class="custom-control-input"  formControlName="hotelClassification" name="hotelClassification" id="hotelClassification1" value="1">
-                  <label class="custom-control-label" for="hotelClassification1"><img src="../../assets/img/star.jpg" alt="One Star" height="42" width="42"></label>
+                <div class="custom-control-inline">
+                  <input type="radio"   formControlName="hotelClassification" name="hotelClassification" id="hotelClassification1" value="1">
+                  <label class="" for="hotelClassification1"><img src="../../assets/img/star.jpg" alt="One Star" height="42" width="42"></label>
                 </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                  <input type="radio" class="custom-control-input"  formControlName="hotelClassification" name="hotelClassification" id="hotelClassification2" value="2">
-                  <label class="custom-control-label" for="hotelClassification2"><img src="../../assets/img/star2.jpg" alt="Two Star" height="42" width="42"></label>
+                <div class="custom-control-inline">
+                  <input type="radio"   formControlName="hotelClassification" name="hotelClassification" id="hotelClassification2" value="2">
+                  <label class="" for="hotelClassification2"><img src="../../assets/img/star2.jpg" alt="Two Star" height="42" width="42"></label>
                 </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                  <input type="radio" class="custom-control-input"  formControlName="hotelClassification" name="hotelClassification" id="hotelClassification3" value="3">
-                  <label class="custom-control-label" for="hotelClassification3"><img src="../../assets/img/star3.jpg" alt="Three Star" height="42" width="42"></label>
+                <div class="custom-control-inline">
+                  <input type="radio"   formControlName="hotelClassification" name="hotelClassification" id="hotelClassification3" value="3">
+                  <label class="" for="hotelClassification3"><img src="../../assets/img/star3.jpg" alt="Three Star" height="42" width="42"></label>
                 </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                  <input type="radio" class="custom-control-input"  formControlName="hotelClassification" name="hotelClassification" id="hotelClassification4" value="4">
-                  <label class="custom-control-label" for="hotelClassification4"><img src="../../assets/img/star4.jpg" alt="For Star" height="42" width="42"></label>
+                <div class="custom-control-inline">
+                  <input type="radio"   formControlName="hotelClassification" name="hotelClassification" id="hotelClassification4" value="4">
+                  <label class="" for="hotelClassification4"><img src="../../assets/img/star4.jpg" alt="Four Star" height="42" width="42"></label>
                 </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                  <input type="radio" class="custom-control-input"  formControlName="hotelClassification" name="hotelClassification" id="hotelClassification5" value="5">
-                  <label class="custom-control-label" for="hotelClassification5"><img src="../../assets/img/star5.jpg" alt="Five Star" height="42" width="42"></label>
+                <div class="custom-control-inline">
+                  <input type="radio"   formControlName="hotelClassification" name="hotelClassification" id="hotelClassification5" value="5">
+                  <label class="" for="hotelClassification5"><img src="../../assets/img/star5.jpg" alt="Five Star" height="42" width="42"></label>
                 </div>
               
                 <span *ngIf="!editForm.get('hotelClassification').valid && editForm.get('hotelClassification').touched"
@@ -215,12 +220,12 @@
     <h3>Error occurred using the webservices!</h3>
     <strong>{{ error }}</strong><br>
     Please contact the coding monkeys.
-    <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
+    
   </div>
   <div *ngIf="success" class="alert alert-success">
       <h3>Success! </h3>
       <strong>{{ success }}</strong>
-      <button class="btn btn-info float-right mr-1" (click)="onSuccessClose()">Close</button>
+      
   </div>
 <table class="table table-striped" *ngIf="hotels.length >= 1">
     <thead>
@@ -247,6 +252,7 @@
       </tr>
     </tbody>
   </table>
+</div>
 
 
 

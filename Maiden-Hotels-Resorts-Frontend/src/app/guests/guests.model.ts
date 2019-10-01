@@ -2,7 +2,7 @@ export class Guest {
     public id: number;
     public firstName: string;
     public lastName: string;
-    public dateBirth: string;
+    public dateOfBirth: string;
     public gender: string;
     public idNumber: number;
     public address: string;
@@ -10,11 +10,11 @@ export class Guest {
     public email: string;
     public status: string;
 
-    constructor (id: number, firstName: string, lastName: string, dateBirth: string, gender: string, idNumber: number, address: string, contactNumber: number, email: string, status: string){
+    constructor (id: number, firstName: string, lastName: string, dateOfBirth: string, gender: string, idNumber: number, address: string, contactNumber: number, email: string, status: string){
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.dateBirth = dateBirth;
+        this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.idNumber = idNumber;
         this.address = address;

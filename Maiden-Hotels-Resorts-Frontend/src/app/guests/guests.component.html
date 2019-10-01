@@ -38,6 +38,7 @@
             <label for="insert_guestGender">Select Gender:</label><br>
             <input type="radio" name="guestGender" id="insert_guestGender1" formControlName="guestGender" value="Male" checked> Male<br>
             <input type="radio" name="guestGender" id="insert_guestGender2" formControlName="guestGender" value="Female"> Female<br>
+            <input type="radio" name="guestGender" id="insert_guestGender3" formControlName="guestGender" value="Other">Other<br>
             <span *ngIf="!insertForm.get('guestGender').valid && insertForm.get('guestGender').touched"
             class="help-block alert-warning">Please enter Gender!</span>
         </div>
@@ -89,7 +90,7 @@
 <div class="modal fade" id="edit_guestModal" tabindex="3" guest="dialog" aria-labelledby="edit_guestModalLabel" aria-hidden="true" >
     <div class="modal-dialog" guest="document">
         <div class="modal-content">
-        <form [formGroup] = "editForm" (ngSubmit)="onUpdateguest()">
+        <form [formGroup] = "editForm" (ngSubmit)="onUpdateGuest()">
         <div class="modal-header">
             <h5 class="modal-title" id="edit_guestModalLabel">Edit Existing guest</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -122,6 +123,7 @@
               <label for="insert_guestGender">Select Gender:</label><br>
               <input type="radio" name="guestGender" id="insert_guestGender1" formControlName="guestGender" value="Male" checked> Male<br>
               <input type="radio" name="guestGender" id="insert_guestGender2" formControlName="guestGender" value="Female"> Female<br>
+              <input type="radio" name="guestGender" id="insert_guestGender3" formControlName="guestGender" value="Other">Other<br>
               <span *ngIf="!insertForm.get('guestGender').valid && insertForm.get('guestGender').touched"
               class="help-block alert-warning">Please enter Gender!</span>
           </div>
@@ -206,12 +208,12 @@
     <h3>Error occurred using the webservices!</h3>
     <strong>{{ error }}</strong><br>
     Please contact the coding monkeys.
-    <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
+    
   </div>
   <div *ngIf="success" class="alert alert-success">
       <h3>Success! </h3>
       <strong>{{ success }}</strong>
-      <button class="btn btn-info float-right mr-1" (click)="onSuccessClose()">Close</button>
+      
   </div>
 <table class="table table-striped" *ngIf="guests.length >= 1 && !error">
     <thead>
@@ -233,7 +235,7 @@
         <td>{{guest.address}}</td>
         <td>{{guest.gender}}</td>
         <td>{{guest.dateOfBirth  | date : "dd-MM-y"}}</td>
-        <td>{{guest.IdNumber}}</td>
+        <td>{{guest.idNumber}}</td>
         <td>{{guest.contactNumber}}</td>
         <td>{{guest.email}}</td>
         <td>{{guest.status}}</td>

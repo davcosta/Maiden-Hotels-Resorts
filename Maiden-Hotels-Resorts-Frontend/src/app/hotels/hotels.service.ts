@@ -34,9 +34,13 @@ export class HotelsService {
 
     deleteHotel(id: number){
         let data: {
-            id: number
+            id: number,
+            name: string,
+            location: string,
+            classification: number,
+            type: string
         };
-        data = { id: id};
+        data = { id: id, name: "",location: "",classification: null,type:""};
         return this.http.post(this.constants.webServicesUrl +'/Hotels/HotelDelete',data);
     }
 

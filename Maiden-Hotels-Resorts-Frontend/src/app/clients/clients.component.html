@@ -1,8 +1,13 @@
-<h2>List of Clients</h2>
+<div class="card" style="background-color: rgba(255, 255, 255, 0.2);">
+<h2 class="text-uppercase">List of Clients</h2>
   <p>Clients are listed below. As an operator you can add, edit or delete new clients.</p>
   <hr>
-  <button type="button" class="btn btn-info mr-1" data-toggle="modal" data-target="#new_clientModal">Create New Client</button>
-  <button type="button" class="btn btn-success text-right mr-1" (click) = "onRefresh();">Refresh List</button>            
+  <div class="row">
+      <div class="col-lg-12">
+          <button type="button" class="btn btn-info text-center mr-1 col-2 float-right" data-toggle="modal" data-target="#new_clientModal">Create New Client</button>            
+          <button type="button" class="btn btn-success text-center mr-1 col-2 float-right" (click) = "fetchServices();">Refresh List</button>
+          </div>
+  </div>          
   <hr>
 <!-- Modal Insert-->
 <div class="modal fade" id="new_clientModal" tabindex="3" role="dialog" aria-labelledby="new_clientModalLabel" aria-hidden="true" >
@@ -19,14 +24,14 @@
                 <div class="form-group">
                     <label for="insert_clientGuestId">Select guest:</label>
                     <select class="form-control" id="insert_clientGuestId"  formControlName="clientGuestId" name="clientGuestId">
-                    <option *ngFor="let guest of guests; index as i;" value={{i}}>{{guest.firtName}} {{guest.lastName}}</option>
+                    <option *ngFor="let guest of guests; index as i;" value={{i}}>{{guest.firstName}} {{guest.lastName}}</option>
                     </select>
                     <span *ngIf="!insertForm.get('clientGuestId').valid && insertForm.get('clientGuestId').touched"
                     class="help-block alert-warning">Please enter a valid guest!</span>
                 </div>
                 <div class="form-group">
                     <label for="insert_clientPassword">Password:</label>
-                    <input type="text" class="form-control" id="insert_guestFirstName"  formControlName="clientPassword" name="clientPassword">
+                    <input type="password" class="form-control" id="insert_clientPassword"  formControlName="clientPassword" name="clientPassword">
                     <span *ngIf="!insertForm.get('clientPassword').valid && insertForm.get('clientPassword').touched"
                       class="help-block alert-warning">Please enter a valid password!</span>
                 </div>
@@ -55,21 +60,21 @@
                 <div class="form-group">
                     <label for="edit_clientGuestId">Select guest:</label>
                     <select class="form-control" id="edit_clientGuestId"  formControlName="clientGuestId" name="clientGuestId">
-                    <option *ngFor="let guest of guests; index as i;" value={{i}}>{{guest.firtName}} {{guest.lastName}}</option>
+                    <option *ngFor="let guest of guests; index as i;" value={{i}}>{{guest.firstName}} {{guest.lastName}}</option>
                     </select>
                     <span *ngIf="!editForm.get('clientGuestId').valid && editForm.get('clientGuestId').touched"
                     class="help-block alert-warning">Please enter a valid guest!</span>
                 </div>
                 <div class="form-group">
                     <label for="edit_clientPassword">Password:</label>
-                    <input type="text" class="form-control" id="edit_clientPassword"  formControlName="clientPassword" name="clientPassword">
-                    <span *ngIf="!editForm.get('clientPassword').valid && insertForm.get('clientPassword').touched"
+                    <input type="password" class="form-control" id="edit_clientPassword"  formControlName="clientPassword" name="clientPassword">
+                    <span *ngIf="!editForm.get('clientPassword').valid && editForm.get('clientPassword').touched"
                       class="help-block alert-warning">Please enter a valid password!</span>
                 </div>
             </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid" onclick="$('#edit_clientModal').modal('hide')">Edit Hotel-Service</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid" onclick="$('#edit_clientModal').modal('hide')">Edit Client</button>
         </div>
         </form>
         </div>
@@ -80,9 +85,9 @@
 <div class="modal fade" id="delete_clientModal" tabindex="3" role="dialog" aria-labelledby="delete_clientModalLabel" aria-hidden="true" >
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-        <form [formGroup] = "deleteForm" (ngSubmit)="onDeleteclient()">
+        <form [formGroup] = "deleteForm" (ngSubmit)="onDeleteClient()">
         <div class="modal-header">
-            <h5 class="modal-title" id="delete_clientModalLabel">Delete Hotel-Service</h5>
+            <h5 class="modal-title" id="delete_clientModalLabel">Delete Client</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -97,7 +102,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-danger" onclick="$('#delete_clientModal').modal('hide')">Delete Hotel-Service</button>
+            <button type="submit" class="btn btn-danger" onclick="$('#delete_clientModal').modal('hide')">Delete Client</button>
         </div>
         </form>
         </div>
@@ -113,34 +118,33 @@
     <h3>Error occurred using the webservices!</h3>
     <strong>{{ error }}</strong><br>
     Please contact the coding monkeys.
-    <button class="btn btn-info float-right mr-1" (click)="onErrorClose()">Close</button>
+    
   </div>
   <div *ngIf="success" class="alert alert-success">
       <h3>Success! </h3>
       <strong>{{ success }}</strong>
-      <button class="btn btn-info float-right mr-1" (click)="onSuccessClose()">Close</button>
+      
   </div>
-<table class="table table-striped" *ngIf="clients.length >= 1 && !error && fetchedGuests">
+<table class="table table-striped" *ngIf="clients.length >= 1 && !error && fetchedClients">
     <thead>
       <tr>
         <th>Guest Name</th>
-        <th>Password</th>
         <th>Credits</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let client of clients; index as i">
-        <td>{{getGuestByGuestid(client.guestId).firstName}}  {{getGuestByGuestid(client.guestId).lastName}}</td>
-        <td>{{client.password}}</td>
+        <td>{{getGuestByGuestId(client.idGuest).firstName}}  {{getGuestByGuestId(client.idGuest).lastName}}</td>
         <td>{{client.moneySpent}}</td>
         <td>
-            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_clientModal" (click)="populateEditForm(i)" >Edit</button>
-            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_clientModal" (click)="populateDeleteForm(i)">Delete</button>
+            <button class="btn btn-info mb-2 mr-2 col-4 btn-block" data-toggle="modal" data-target="#edit_clientModal" (click)="populateEditForm(i)" >Edit</button>
+            <button class="btn btn-danger mb-2 mr-2 col-4 btn-block" data-toggle="modal" data-target="#delete_clientModal" (click)="populateDeleteForm(i)">Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
+</div>
 
 
 
