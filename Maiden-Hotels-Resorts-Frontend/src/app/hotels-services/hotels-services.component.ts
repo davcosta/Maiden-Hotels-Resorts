@@ -18,6 +18,7 @@ export class HotelsServicesComponent implements OnInit {
   editForm: FormGroup;
   deleteForm: FormGroup;
   readServicesForm: FormGroup;
+  deleteServicesForm: FormGroup;
 
   public isFetching = false;
   public error = "";
@@ -58,6 +59,10 @@ export class HotelsServicesComponent implements OnInit {
       'idService': new FormControl(null,Validators.required)
     })
 
+    this.deleteServicesForm = new FormGroup({
+      'idHotelService' : new FormControl(null),
+    });
+
   }
 
   populateReadServicesForm(hotelIndex: number){
@@ -96,6 +101,36 @@ export class HotelsServicesComponent implements OnInit {
     this.deleteForm.setValue({
       idHotelService : index
     });
+  }
+
+  populateDeleteServicesForm(index: number){
+    this.deleteServicesForm.setValue({
+      idHotelService : index
+    });
+  }
+
+  onAddServiceToHotel(){
+    this.hotelsServicesService.createAndStoreHotelService(
+      this.hotels[this.readServicesForm.value.idHotel].id,
+      this.services[this.readServicesForm.value.idService].id
+       
+      ).subscribe(responseData => {
+        console.log(responseData);
+        if(responseData == -1){
+          this.error = "Something went wrong inserting the hotel-service..."
+          this.success ="";
+        }else{
+          this.success = "Hotel-service inserted!";
+          this.error = "";
+          this.fetchHotelsServices();
+          this.getServicesByHotelId(this.servicesFromHotel[this.readServicesForm.value.idHotel].idHotel);
+        }
+        
+      },
+      error =>{
+          this.error = error.message;
+          this.success = "";
+      });
   }
 
   onCreateHotelService(){
@@ -146,7 +181,7 @@ export class HotelsServicesComponent implements OnInit {
   onDeleteHotelService(){
     console.log("onDeleteHotelService");
     //get id from the deleteForm
-    let index = this.deleteForm.value.idHotelService;
+    let index = this.deleteServicesForm.value.idHotelService;
     console.log("deleting client id: " + this.hotelsServices[index].id);
     //send http request
     this.hotelsServicesService.deleteHotelService(this.hotelsServices[index].id).subscribe(responseData => {
@@ -154,6 +189,7 @@ export class HotelsServicesComponent implements OnInit {
       this.success = "Hotel-service Deleted!";
       this.error = "";
       this.fetchHotelsServices();
+      this.getServicesByHotelId(this.servicesFromHotel[this.readServicesForm.value.idHotel].idHotel);
     },
     error =>{
         this.error = error.message;
@@ -217,6 +253,24 @@ export class HotelsServicesComponent implements OnInit {
     error =>{
         this.error = error.message;
     });
+  }
+
+  onDeleteService(){
+    console.log("onDeleteService");
+    //get id from the deleteForm
+    let index = this.deleteServicesForm.value.hotelServicesId;
+    console.log("deleting service id: " + this.servicesFromHotel[index].id);
+    //send http request
+    this.hotelsServicesService.deleteHotelService(this.servicesFromHotel[index].id).subscribe(responseData => {
+      console.log(responseData);
+      this.success = "Service Deleted.";
+      this.error = "";
+      this.getServicesByHotelId(this.servicesFromHotel[this.readServicesForm.value.idHotel].idHotel);
+  },
+  error =>{
+      this.error = error.message;
+      this.success = "";
+  });
   }
 
   private getHotelByIdHotel(idHotel: number){

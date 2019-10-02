@@ -1,14 +1,14 @@
 export class HotelRoom {
     public id: number;
-    public hotelId: number;
-    public roomId: number;
+    public idHotel: number;
+    public idRooms: number;
     public roomNumber: number;
     public cost: number;
 
-    constructor (id:number, hotelId: number, roomId: number, roomNumber: number, cost: number){
+    constructor (id:number, idHotel: number, idRooms: number, roomNumber: number, cost: number){
         this.id = id;
-        this.hotelId = hotelId;
-        this.roomId = roomId;
+        this.idHotel = idHotel;
+        this.idRooms = idRooms;
         this.roomNumber = roomNumber;
         this.cost = cost;
     }

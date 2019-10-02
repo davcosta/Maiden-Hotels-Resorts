@@ -8,28 +8,28 @@ export class HotelsRoomsService {
 
     constructor(private http: HttpClient, private constants: ConstantsService){}
 
-    createAndStoreHotelRoom(hotelId: number, roomId: number, roomNumber: number, cost: number){
-        console.log("inserting: " + hotelId + " " + roomId + " " + roomNumber + " "+ cost);
+    createAndStoreHotelRoom(idHotel: number, idRooms: number, roomNumber: number, cost: number){
+        console.log("inserting: " + idHotel + " " + idRooms + " " + roomNumber + " "+ cost);
         let data: {
-            hotelId: number,
-            roomId: number,
+            idHotel: number,
+            idRooms: number,
             roomNumber: number,
             cost: number
         };
-        data = {hotelId: hotelId, roomId: roomId, roomNumber: roomNumber, cost: cost};
-        return this.http.post(this.constants.webServicesUrl+'/HotelsRooms/HotelsRoomsCreate',data);
+        data = {idHotel: idHotel, idRooms: idRooms, roomNumber: roomNumber, cost: cost};
+        return this.http.post(this.constants.webServicesUrl+'/RoomsHotel/RoomsHotelCreate',data);
     }
 
-    updateHotelRoom(id: number, hotelId: number, roomId: number, roomNumber: number, cost: number){
+    updateHotelRoom(id: number, idHotel: number, idRooms: number, roomNumber: number, cost: number){
         let data: {
             id: Number,
-            hotelId: number,
-            roomId: number,
+            idHotel: number,
+            idRooms: number,
             roomNumber: number,
             cost: number
         };
-        data = {id: id, hotelId: hotelId, roomId: roomId, roomNumber: roomNumber, cost: cost};
-        return this.http.post(this.constants.webServicesUrl+'/HotelsRooms/HotelsRoomsUpdate',data);
+        data = {id: id, idHotel: idHotel, idRooms: idRooms, roomNumber: roomNumber, cost: cost};
+        return this.http.post(this.constants.webServicesUrl+'/RoomsHotel/RoomsHotelUpdate',data);
     }
 
     deleteHotelRoom(id: number){
@@ -37,12 +37,12 @@ export class HotelsRoomsService {
             id: number
         };
         data = {id: id};
-        return this.http.post(this.constants.webServicesUrl +'/HotelsRooms/HotelsRoomsDelete',data);
+        return this.http.post(this.constants.webServicesUrl +'/RoomsHotel/RoomsHotelDelete',data);
     }
 
     fetchHotelsRooms(){
 
-        return this.http.get<HotelRoom[]>(this.constants.webServicesUrl+'/HotelsRooms');
+        return this.http.get<HotelRoom[]>(this.constants.webServicesUrl+'/RoomsHotel');
 
     }
 }

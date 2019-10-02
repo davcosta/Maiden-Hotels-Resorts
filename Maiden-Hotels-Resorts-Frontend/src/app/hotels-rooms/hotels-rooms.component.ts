@@ -28,6 +28,7 @@ export class HotelsRoomsComponent implements OnInit {
   public rooms: Room[] = [ ];
   public fetchedHotels: boolean;
   public fetchedRooms: boolean;
+  public fetchedHotelRooms: boolean;
 
   constructor(private hotelsService: HotelsService, private roomsService: RoomsService, private hotelsRoomsService: HotelsRoomsService) { }
 
@@ -59,9 +60,8 @@ export class HotelsRoomsComponent implements OnInit {
 
   onRefresh(){
     this.fetchHotels();
-    this.fetchRooms();
-    while(this.fetchedHotels && this.fetchedRooms){}
-    this.fetchHotelsRooms();
+    
+    
   }
 
   populateEditForm(index: number){
@@ -70,8 +70,10 @@ export class HotelsRoomsComponent implements OnInit {
     
         this.editForm.setValue({
           hotelRoomId:index,
-          hotelId: this.hotels[index].name,
-          roomId : this.rooms[index].id, //change later with a better property...
+          hotelId: this.getHotelIndex(this.getHotelByHotelId(this.hotelsRooms[index].idHotel)),
+          roomId : this.getRoomIndex (this.getRoomByRoomId(this.hotelsRooms[index].idRooms)),
+          roomNumber: this.hotelsRooms[index].roomNumber,
+          cost: this.hotelsRooms[index].cost
           
         });
 
@@ -156,13 +158,16 @@ export class HotelsRoomsComponent implements OnInit {
   }
 
   private fetchHotelsRooms(){
+    this.fetchedHotelRooms = false;
     this.isFetching = true;
-    this.hotelsRoomsService.fetchHotelsRooms().subscribe(hotelsrooms =>{
+    this.hotelsRoomsService.fetchHotelsRooms().subscribe(hotelsRooms =>{
       this.isFetching = false;
       this.hotelsRooms = [];
-        for (var i = 0, len = hotelsrooms.length; i < len; i++) {
-          this.hotelsRooms.push(new HotelRoom(hotelsrooms[i].id, hotelsrooms[i].hotelId, hotelsrooms[i].roomId, hotelsrooms[i].roomNumber, hotelsrooms[i].cost));
+        for (var i = 0, len = hotelsRooms.length; i < len; i++) {
+          this.hotelsRooms.push(new HotelRoom(hotelsRooms[i].id, hotelsRooms[i].idHotel, hotelsRooms[i].idRooms, hotelsRooms[i].roomNumber, hotelsRooms[i].cost));
         }
+        this.fetchedHotelRooms = true;
+        console.log(this.hotelsRooms);
     },
     error =>{
         this.error = error.message;
@@ -178,18 +183,17 @@ export class HotelsRoomsComponent implements OnInit {
     this.success = null;
   }
 
-  public getHotelIndex(hotel: Hotel){
-    return this.hotels.indexOf(hotel);
-  }
 
   fetchHotels() {
     this.fetchedHotels = false;
     this.hotelsService.fetchHotels().subscribe(hotels =>{
-      this.fetchedHotels = true;
+     
       this.hotels = [];
         for (var i = 0, len = hotels.length; i < len; i++) {
           this.hotels.push(new Hotel(hotels[i].id, hotels[i].name, hotels[i].location, hotels[i].classification, hotels[i].type));
         }
+        this.fetchedHotels = true;
+        this.fetchRooms();
     },
     error =>{
         this.error = error.message;
@@ -199,11 +203,13 @@ export class HotelsRoomsComponent implements OnInit {
   fetchRooms() {
     this.fetchedRooms = false;
     this.roomsService.fetchRooms().subscribe(rooms =>{
-      this.fetchedRooms = true;
-      this.hotels = [];
+      
+      this.rooms = [];
         for (var i = 0, len = rooms.length; i < len; i++) {
           this.rooms.push(new Room(rooms[i].id, rooms[i].beds, rooms[i].divisions, rooms[i].type, rooms[i].size));
         }
+        this.fetchedRooms = true;
+        this.fetchHotelsRooms();
     },
     error =>{
         this.error = error.message;
@@ -211,11 +217,23 @@ export class HotelsRoomsComponent implements OnInit {
   }
 
   private getRoomByRoomId(roomId: number){
-    return this.rooms.find(x => x.id = roomId);
+    return this.rooms.find(x => x.id === roomId);
   }
 
   private getHotelByHotelId(hotelId: number){
-    return this.hotels.find(x => x.id = hotelId);
+    console.log(this.hotels);
+    console.log(this.hotels.find(x => x.id === hotelId));
+    return this.hotels.find(x => x.id === hotelId);
+  }
+
+  private getHotelIndex(hotel: Hotel){
+    console.log("hotel name: "+ hotel.name);
+    return this.hotels.findIndex(x => x.id === hotel.id)
+  }
+
+  private getRoomIndex(room: Room){
+    console.log("hotel name: "+ room.id);
+    return this.rooms.findIndex(x => x.id === room.id)
   }
 
 }

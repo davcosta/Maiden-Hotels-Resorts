@@ -27,7 +27,7 @@
                 <div class="form-group">
                     <label for="insert_room">Select Room:</label>
                     <select class="form-control" id="insert_room"  formControlName="roomId" name="roomId">
-                    <option *ngFor="let room of rooms; index as i;" value={{i}}>{{service.id}}</option>
+                    <option *ngFor="let room of rooms; index as i;" value={{i}}>{{room.id}}</option>
                     </select>
                     <span *ngIf="!insertForm.get('roomId').valid && insertForm.get('roomId').touched"
                     class="help-block alert-warning">Please select a valid room!</span>
@@ -77,7 +77,7 @@
                         <div class="form-group">
                             <label for="edit_room">Select Room:</label>
                             <select class="form-control" id="edit_room"  formControlName="roomId" name="roomId">
-                            <option *ngFor="let room of rooms; index as i;" value={{i}}>{{service.id}}</option>
+                            <option *ngFor="let room of rooms; index as i;" value={{i}}>{{room.id}}</option>
                             </select>
                             <span *ngIf="!editForm.get('roomId').valid && editForm.get('roomId').touched"
                             class="help-block alert-warning">Please select a valid room!</span>
@@ -148,7 +148,7 @@
       <strong>{{ success }}</strong>
       
   </div>
-<table class="table table-striped" *ngIf="hotelsRooms.length >= 1 && !error && fetchedhotelRooms">
+<table class="table table-striped" *ngIf="hotelsRooms.length >= 1 && !error && fetchedHotelRooms">
     <thead>
       <tr>
         <th>Hotel</th>
@@ -159,9 +159,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let hotelRoom of hotelRooms; index as i">
-        <td>{{getHotelByHotelId(hotelRoom.hotelId).name}} </td>
-        <td>{{getRoomByRoomId(hotelRoom.roomId).id}}</td>
+      <tr *ngFor="let hotelRoom of hotelsRooms; index as i">
+        <td>{{getHotelByHotelId(hotelRoom.idHotel).name}} </td>
+        <td>{{getRoomByRoomId(hotelRoom.idRooms).id}}</td>
         <td>{{hotelRoom.roomNumber}}</td>
         <td>{{hotelRoom.cost}}</td>
         <td>

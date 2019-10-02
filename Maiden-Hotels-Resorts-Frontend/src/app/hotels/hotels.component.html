@@ -209,7 +209,86 @@
         </form>
         </div>
     </div>
+  </div> 
+  
+  <!-- Modal Delete Service-->
+<div class="modal hide fade" id="delete_serviceModal" tabindex="3" role="dialog" aria-labelledby="delete_serviceModalLabel" aria-hidden="true" style="z-index: 1600;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <form [formGroup] = "deleteServicesForm" (ngSubmit)="onDeleteHotelService()">
+        <div class="modal-header">
+            <h5 class="modal-title" id="delete_serviceModalLabel">Delete service</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="hidden" class="form-control"  formControlName="idHotelService" name="idHotelService" value=""/>
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong> You are about to delete a service. Are you sure?
+                  </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger" onclick="$('#delete_serviceModal').modal('hide')">Delete Service</button>
+        </div>
+        </form>
+        </div>
+    </div>
   </div>  
+
+
+  <!-- Modal List of services-->
+  <div class="modal hide fade" id="read_hotelServicesModal" tabindex="3" role="dialog" aria-labelledby="read_hotelServicesModalLabel" aria-hidden="true" >
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+          <form [formGroup] = "readServicesForm" >
+          <div class="modal-header">
+              <h5 class="modal-title" id="read_hotelServicesModalLabel">List of Services in ..</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+              <div class="modal-body">
+                  <div class="form-group">
+                      <label for="edit_service">Select Service:</label>
+                      <select class="form-control" id="edit_service"  formControlName="idService" name="idService">
+                        <option *ngFor="let service of services; index as i;" value={{i}}>{{service.name}}</option>
+                      </select>
+                      <span *ngIf="!readServicesForm.get('idService').valid && readServicesForm.get('idService').touched"
+                        class="help-block alert-warning">Please enter a valid service!</span>
+                        <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" (click)="onAddServiceToHotel()" >Add Service</button>
+                  </div>
+                  <table class="table table-striped" *ngIf="servicesFromHotel.length >= 1 && !error && fetchedHotelServices">
+                      <thead>
+                        <tr>
+                          <th>Service</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let serviceFromHotel of servicesFromHotel; index as i">
+                          <td> {{getServiceByIdService(serviceFromHotel.idService).name}} </td>
+                          <td><button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_serviceModal" (click)="populateDeleteServicesForm(i)">Delete</button></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <input type="hidden" class="form-control"  formControlName="idHotel" name="idHotel" value=""/>
+              </div>
+              
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <!--<button type="submit" class="btn btn-primary" [disabled]="!readServicesForm.valid" onclick="$('#edit_hotelServiceModal').modal('hide')">Edit Hotel-Service</button>-->
+              
+          </div>
+          </form>
+          </div>
+      </div>
+    </div> 
+
+
   <div *ngIf="hotels.length < 1 && !isFetching" class="alert alert-warning">
     <strong>No hotels found!</strong> Add new hotels using the Create button
   </div>
@@ -246,7 +325,8 @@
         <td>{{hotel.classification}}</td>
         <td>{{hotel.type}}</td>
         <td>
-            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_hotelModal" (click)="populateEditForm(i)" >Edit</button>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#read_hotelServicesModal" (click)="populateReadServicesForm(i)" >Services</button>
+            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_hotelModal" (click)="populateEditForm(i)" >Edit Hotel</button>
             <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_hotelModal" (click)="populateDeleteForm(i)">Delete</button>
         </td>
       </tr>
