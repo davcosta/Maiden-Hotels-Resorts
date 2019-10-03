@@ -6,7 +6,11 @@ import {HotelService} from '../hotels-services/hotels-services.model';
 import {ServicesService} from '../services/services.service';
 import {Service} from '../services/services.model';
 import { HotelsServicesService } from '../hotels-services/hotels-services.service';
+import {Room} from '../rooms/rooms.model';
+import {HotelRoom} from '../hotels-rooms/hotels-rooms.model';
+import {HotelsRoomsService} from '../hotels-rooms/hotels-rooms.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { RoomsService } from '../rooms/rooms.service';
 
 @Component({
   selector: 'app-hotels',
@@ -20,6 +24,9 @@ export class HotelsComponent implements OnInit {
   deleteForm: FormGroup;
   readServicesForm: FormGroup;
   deleteServicesForm: FormGroup;
+  readRoomsForm: FormGroup;
+  deleteRoomsForm: FormGroup;
+  editHotelRoomForm: FormGroup;
 
   public isFetching = false;
   public error = "";
@@ -30,11 +37,16 @@ export class HotelsComponent implements OnInit {
   public hotelsServices: HotelService[] = [ ];
   public services: Service[] = [ ];
   public servicesFromHotel: HotelService[] = [];
+  public rooms: Room[] = [];
+  public hotelsRooms: HotelRoom[] = [];
+  public roomsFromHotel: HotelRoom[] = [];
   public fetchedHotels: boolean;
   public fetchedServices: boolean;
   public fetchedHotelServices: boolean;
+  public fetchedHotelRooms: boolean;
+  public fetchedRooms: boolean;
 
-  constructor(private http: HttpClient, private hotelsService: HotelsService, private servicesService: ServicesService, private hotelsServicesService: HotelsServicesService) { }
+  constructor(private http: HttpClient, private hotelsService: HotelsService, private servicesService: ServicesService, private hotelsServicesService: HotelsServicesService, private hotelsRoomsService: HotelsRoomsService, private roomsService: RoomsService) { }
 
   ngOnInit() {
     this.onRefresh();
@@ -62,10 +74,28 @@ export class HotelsComponent implements OnInit {
     this.readServicesForm = new FormGroup({
       'idHotel': new FormControl(null,Validators.required),
       'idService': new FormControl(null,Validators.required)
-    })
+    });
 
     this.deleteServicesForm = new FormGroup({
       'idHotelService' : new FormControl(null),
+    });
+
+    this.readRoomsForm = new FormGroup({
+      'idHotel': new FormControl(null,Validators.required),
+      'idRoom': new FormControl(null,Validators.required),
+      'roomNumber': new FormControl(null,Validators.required),
+      'cost': new FormControl(null,Validators.required),
+    });
+
+    this.deleteRoomsForm = new FormGroup({
+      'idHotelRoom' : new FormControl(null),
+    });
+
+    this.editHotelRoomForm = new FormGroup({
+      'idHotelRoom': new FormControl(null,Validators.required),
+      'idRoom': new FormControl(null,Validators.required),
+      'roomNumber': new FormControl(null,Validators.required),
+      'cost': new FormControl(null,Validators.required),
     });
 
   }
@@ -80,6 +110,27 @@ export class HotelsComponent implements OnInit {
     this.getServicesByHotelId(this.hotels[hotelIndex].id);
   }
 
+  populateReadRoomsForm(hotelIndex: number){
+    console.log("index hotel: "+ hotelIndex);
+    this.readRoomsForm.setValue({
+      idHotel: hotelIndex,
+      roomNumber: "",
+      cost: "",
+      idRoom: 0, 
+    });
+
+    this.getRoomsByHotelId(this.hotels[hotelIndex].id);
+  }
+
+  populateEditHotelRoomForm(index: number){
+    this.editHotelRoomForm.setValue({
+      idHotelRoom: index,
+      roomNumber: this.roomsFromHotel[index].roomNumber,
+      cost: this.roomsFromHotel[index].cost,
+      idRoom: this.roomsFromHotel[index].idRooms, 
+    });
+  }
+
   populateDeleteServicesForm(index: number){
     this.deleteServicesForm.setValue({
       idHotelService : index
@@ -87,10 +138,19 @@ export class HotelsComponent implements OnInit {
     console.log("populateDeleteServicesForm index: "+index);
   }
 
+  populateDeleteRoomsForm(index: number){
+    this.deleteRoomsForm.setValue({
+      idHotelRoom : index
+    });
+    console.log("populateDeleteRoomsForm index: "+index);
+  }
+
   onRefresh(){
     this.fetchHotels();
     this.fetchServices();
-    while(this.fetchedHotels && this.fetchedServices){}
+    this.fetchRooms();
+    while(this.fetchedHotels && this.fetchedServices && this.fetchedRooms){}
+    this.fetchHotelsRooms();
     this.fetchHotelsServices();
   }
 
@@ -118,24 +178,76 @@ export class HotelsComponent implements OnInit {
       });
   }
 
-  onUpdateHotelService(){
-    console.log("onUpdateHotelService");
-    //send http request
-    this.hotelsServicesService.updateHotelService(
-      this.hotelsServices[this.editForm.value.idHotelService].id,
-      this.hotels[this.editForm.value.idHotel].id,
-      this.services[this.editForm.value.idService].id
-      
+  onAddRoomToHotel(){
+    this.hotelsRoomsService.createAndStoreHotelRoom(
+      this.hotels[this.readRoomsForm.value.idHotel].id,
+      this.rooms[this.readRoomsForm.value.idRoom].id,
+      this.readRoomsForm.value.roomNumber,
+      this.readRoomsForm.value.cost
+       
       ).subscribe(responseData => {
         console.log(responseData);
-        this.success = "Hotel-service updated!";
-        this.error = "";
-        this.fetchHotelsServices();
+        if(responseData == -1){
+          this.error = "Something went wrong inserting the hotel-room..."
+          this.success ="";
+        }else{
+          this.success = "Hotel-room inserted!";
+          this.error = "";
+          this.fetchHotelsRooms();
+          this.getRoomsByHotelId(this.hotels[this.readRoomsForm.value.idHotel].id);
+        }
+        
       },
       error =>{
           this.error = error.message;
           this.success = "";
       });
+  }
+
+  onDeactivateHotelService(){
+    console.log("onUpdateHotelService");
+    //send http request
+    this.hotelsServicesService.updateHotelService(
+      this.servicesFromHotel[this.deleteServicesForm.value.idHotelService].id,
+      null,
+      null,
+      "inactive"
+      ).subscribe(responseData => {
+        console.log(responseData);
+        this.success = "Hotel-service updated!";
+        this.error = "";
+        this.fetchHotelsServices();
+        this.getServicesByHotelId(this.hotels[this.readServicesForm.value.idHotel].id);
+      },
+      error =>{
+          this.error = error.message;
+          this.success = "";
+      });
+  }
+
+  onUpdateHotelRoom(){
+    console.log("onUpdateHotelRoom");
+    //send http request
+    this.hotelsRoomsService.updateHotelRoom(
+      this.roomsFromHotel[this.editHotelRoomForm.value.idHotelRoom].id,
+      this.roomsFromHotel[this.editHotelRoomForm.value.idHotelRoom].idHotel,
+      this.rooms[this.editHotelRoomForm.value.idRoom].id,
+      this.editHotelRoomForm.value.roomNumber,
+      this.editHotelRoomForm.value.cost
+      
+      ).subscribe(responseData => {
+        console.log(responseData);
+        this.success = "Hotel-room updated!";
+        this.error = "";
+        this.fetchHotelsRooms();
+        this.getRoomsByHotelId(this.hotels[this.readRoomsForm.value.idHotel].id);
+      },
+      error =>{
+          this.error = error.message;
+          this.success = "";
+      });
+
+      
   }
 
   onDeleteHotelService(){
@@ -159,6 +271,27 @@ export class HotelsComponent implements OnInit {
     });
 
   }
+  onDeleteHotelRoom(){
+    console.log("onDeleteHotelRoom");
+    //get id from the deleteForm
+    let index = this.deleteRoomsForm.value.idHotelRoom;
+
+    console.log("deleting hotel-room id: " + this.roomsFromHotel[index].id);
+    //send http request
+    this.hotelsRoomsService.deleteHotelRoom(this.roomsFromHotel[index].id).subscribe(responseData => {
+      console.log(responseData);
+      this.success = "Hotel-room Deleted!";
+      this.error = "";
+      this.fetchHotelsRooms();
+      console.log(this.roomsFromHotel);
+      this.getRoomsByHotelId(this.hotels[this.readRoomsForm.value.idHotel].id);
+    },
+    error =>{
+        this.error = error.message;
+        this.success ="";
+    });
+
+  }
 
   onFetchHotelsServices(){
     this.fetchHotelsServices();
@@ -170,7 +303,22 @@ export class HotelsComponent implements OnInit {
       this.isFetching = false;
       this.hotelsServices = [];
         for (var i = 0, len = hotelsServices.length; i < len; i++) {
-            this.hotelsServices.push(new HotelService(hotelsServices[i].id, hotelsServices[i].idHotel, hotelsServices[i].idService));
+            this.hotelsServices.push(new HotelService(hotelsServices[i].id, hotelsServices[i].idHotel, hotelsServices[i].idService, hotelsServices[i].status));
+        }
+    },
+    error =>{
+        this.error = error.message;
+    });
+    
+  }
+
+  private fetchHotelsRooms(){
+    this.isFetching = true;
+    this.hotelsRoomsService.fetchHotelsRooms().subscribe(hotelsRooms =>{
+      this.isFetching = false;
+      this.hotelsRooms = [];
+        for (var i = 0, len = hotelsRooms.length; i < len; i++) {
+            this.hotelsRooms.push(new HotelRoom(hotelsRooms[i].id, hotelsRooms[i].idHotel, hotelsRooms[i].idRooms, hotelsRooms[i].roomNumber, hotelsRooms[i].cost));
         }
     },
     error =>{
@@ -189,6 +337,22 @@ export class HotelsComponent implements OnInit {
         }
         console.log(this.services);
         this.fetchedServices = true;
+    },
+    error =>{
+        this.error = error.message;
+    });
+  }
+
+  fetchRooms() {
+    this.fetchedRooms = false;
+    this.roomsService.fetchRooms().subscribe(rooms =>{
+      this.fetchedRooms = true;
+      this.rooms = [];
+        for (var i = 0, len = rooms.length; i < len; i++) {
+          this.rooms.push(new Room(rooms[i].id, rooms[i].beds,rooms[i].divisions, rooms[i].type, rooms[i].size,));
+        }
+        console.log(this.rooms);
+        this.fetchedRooms = true;
     },
     error =>{
         this.error = error.message;
@@ -310,6 +474,11 @@ export class HotelsComponent implements OnInit {
     return this.services.find(x => x.id === idService);
   }
 
+  private getRoomByIdRoom(idRoom: number){
+    //console.log("service id: "+ idService);
+    return this.rooms.find(x => x.id === idRoom);
+  }
+
   private getHotelIndex(hotel: Hotel){
     console.log("hotel name: "+ hotel.name);
     return this.hotels.findIndex(x => x.id === hotel.id)
@@ -318,6 +487,11 @@ export class HotelsComponent implements OnInit {
   private getServiceIndex(service: Service){
     console.log("service name: "+ service.name);
     return this.services.findIndex(x => x.id === service.id)
+  }
+
+  private getRoomIndex(room: Room){
+    console.log("hotel room: "+ room.id);
+    return this.rooms.findIndex(x => x.id === room.id)
   }
 
   private getServicesByHotelId(idHotel: number){
@@ -330,10 +504,30 @@ export class HotelsComponent implements OnInit {
         for (var i = 0, len = hotelsServices.length; i < len; i++) {
           console.log(hotelsServices[i].id);
           if((""+hotelsServices[i].id) != "")
-            this.servicesFromHotel.push(new HotelService(hotelsServices[i].id, hotelsServices[i].idHotel, hotelsServices[i].idService));
+            this.servicesFromHotel.push(new HotelService(hotelsServices[i].id, hotelsServices[i].idHotel, hotelsServices[i].idService, hotelsServices[i].status));
         }
         this.fetchedHotelServices = true;
         console.log(this.servicesFromHotel);
+    },
+    error =>{
+        this.error = error.message;
+    });
+  }
+
+  private getRoomsByHotelId(idHotel: number){
+    console.log("getRoomsByHotelId hotel id: "+idHotel);
+    this.fetchedHotelRooms = false;
+    this.isFetching = true;
+    this.hotelsRoomsService.getRoomsByHotelId(idHotel).subscribe(hotelsRooms =>{
+      this.isFetching = false;
+      this.roomsFromHotel = [];
+        for (var i = 0, len = hotelsRooms.length; i < len; i++) {
+          console.log(hotelsRooms[i].id);
+          if((""+hotelsRooms[i].id) != "")
+            this.roomsFromHotel.push(new HotelRoom(hotelsRooms[i].id, hotelsRooms[i].idHotel, hotelsRooms[i].idRooms, hotelsRooms[i].roomNumber, hotelsRooms[i].cost));
+        }
+        this.fetchedHotelRooms = true;
+        console.log(this.roomsFromHotel);
     },
     error =>{
         this.error = error.message;

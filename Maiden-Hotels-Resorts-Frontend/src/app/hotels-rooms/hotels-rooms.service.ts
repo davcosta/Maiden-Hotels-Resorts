@@ -45,4 +45,14 @@ export class HotelsRoomsService {
         return this.http.get<HotelRoom[]>(this.constants.webServicesUrl+'/RoomsHotel');
 
     }
+
+    getRoomsByHotelId(idHotel: number){
+        let data: {
+            id: number,
+            idHotel: number,
+            idRooms: number
+        };
+        data = {id: null, idHotel: idHotel, idRooms: null};
+        return this.http.post<HotelRoom[]>(this.constants.webServicesUrl+'/RoomsHotel/RoomsHotelByParam',data);
+    }
 }

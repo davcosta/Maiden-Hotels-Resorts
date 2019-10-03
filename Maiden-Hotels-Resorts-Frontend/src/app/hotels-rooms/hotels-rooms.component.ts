@@ -81,7 +81,7 @@ export class HotelsRoomsComponent implements OnInit {
 
   populateDeleteForm(index: number){
     this.deleteForm.setValue({
-      hotelServiceId : index
+      hotelRoomId : index
     });
   }
 
@@ -90,7 +90,7 @@ export class HotelsRoomsComponent implements OnInit {
     //send http request
     this.hotelsRoomsService.createAndStoreHotelRoom(
       this.hotels[this.insertForm.value.hotelId].id,
-      this.rooms[this.insertForm.value.serviceId].id,
+      this.rooms[this.insertForm.value.roomId].id,
       this.insertForm.value.roomNumber,
       this.insertForm.value.cost
        
@@ -116,9 +116,9 @@ export class HotelsRoomsComponent implements OnInit {
     console.log("onUpdateHotelRoom");
     //send http request
     this.hotelsRoomsService.updateHotelRoom(
-      this.hotelsRooms[this.editForm.value.hotelServiceId].id,
+      this.hotelsRooms[this.editForm.value.hotelRoomId].id,
       this.hotels[this.editForm.value.hotelId].id,
-      this.rooms[this.editForm.value.serviceId].id,
+      this.rooms[this.editForm.value.roomId].id,
       this.editForm.value.roomNumber,
       this.editForm.value.cost
       

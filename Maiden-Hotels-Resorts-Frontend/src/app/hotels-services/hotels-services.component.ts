@@ -162,9 +162,10 @@ export class HotelsServicesComponent implements OnInit {
     console.log("onUpdateHotelService");
     //send http request
     this.hotelsServicesService.updateHotelService(
-      this.hotelsServices[this.editForm.value.idHotelService].id,
-      this.hotels[this.editForm.value.idHotel].id,
-      this.services[this.editForm.value.idService].id
+      null,
+      null,
+      null,
+      "Inactive"
       
       ).subscribe(responseData => {
         console.log(responseData);
@@ -208,7 +209,7 @@ export class HotelsServicesComponent implements OnInit {
       this.isFetching = false;
       this.hotelsServices = [];
         for (var i = 0, len = hotelsServices.length; i < len; i++) {
-            this.hotelsServices.push(new HotelService(hotelsServices[i].id, hotelsServices[i].idHotel, hotelsServices[i].idService));
+            this.hotelsServices.push(new HotelService(hotelsServices[i].id, hotelsServices[i].idHotel, hotelsServices[i].idService, hotelsServices[i].status));
         }
     },
     error =>{
@@ -303,7 +304,7 @@ export class HotelsServicesComponent implements OnInit {
         for (var i = 0, len = hotelsServices.length; i < len; i++) {
           console.log(hotelsServices[i].id);
           if((""+hotelsServices[i].id) != "")
-            this.servicesFromHotel.push(new HotelService(hotelsServices[i].id, hotelsServices[i].idHotel, hotelsServices[i].idService));
+            this.servicesFromHotel.push(new HotelService(hotelsServices[i].id, hotelsServices[i].idHotel, hotelsServices[i].idService, hotelsServices[i].status));
         }
         this.fetchedHotelServices = true;
         console.log(this.servicesFromHotel);

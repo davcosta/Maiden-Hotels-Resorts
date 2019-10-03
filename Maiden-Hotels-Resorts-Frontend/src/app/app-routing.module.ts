@@ -24,8 +24,8 @@ const appRoutes: Routes = [
     {path: 'manage-hotels', component: HotelsComponent },
     {path: 'manage-rooms', component: RoomsComponent },
     {path: 'manage-services', component: ServicesComponent },
-    {path: 'manage-hotels-services', component: HotelsServicesComponent },
-    {path: 'manage-hotels-rooms', component: HotelsRoomsComponent }
+    //{path: 'manage-hotels-services', component: HotelsServicesComponent },
+    //{path: 'manage-hotels-rooms', component: HotelsRoomsComponent }
 ];
 
 @NgModule({

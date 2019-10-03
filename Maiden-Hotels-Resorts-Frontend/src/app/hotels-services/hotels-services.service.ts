@@ -12,19 +12,21 @@ export class HotelsServicesService {
     createAndStoreHotelService(idHotel: number, idService: number){
         let data: {
             idHotel: number,
-            idService: number
+            idService: number,
+            status: string
         };
-        data = {idHotel: idHotel, idService: idService};
+        data = {idHotel: idHotel, idService: idService, status: "Active"};
         return this.http.post(this.constants.webServicesUrl+'/ServicesHotel/ServicesHotelCreate', data);
     }
 
-    updateHotelService(id: number, idHotel: number, idService: number){
+    updateHotelService(id: number, idHotel: number, idService: number, status: string){
         let data: {
             id: number,
-            idHotel: number,
-            idService: number
+            idHotel: string,
+            idService: string,
+            status: string
         };
-        data = {id: id, idHotel: idHotel, idService: idService};
+        data = {id: id, idHotel: "", idService: "", status: status};
         return this.http.post(this.constants.webServicesUrl+'/ServicesHotel/ServicesHotelUpdate', data);
     }
 
@@ -37,16 +39,18 @@ export class HotelsServicesService {
     }
 
     fetchHotelsServices(){
-        return this.http.get<{id: number, idHotel: number, idService: number}[]>(this.constants.webServicesUrl+'/ServicesHotel');
+        return this.http.get<HotelService[]>(this.constants.webServicesUrl+'/ServicesHotel');
     }
 
     getServicesByHotelId(idHotel: number){
         let data: {
             id: number,
             idHotel: number,
-            idService: number
+            idService: number,
+            status: string
+
         };
-        data = {id: null, idHotel: idHotel, idService: null};
-        return this.http.post<{id: number, idHotel: number, idService: number}[]>(this.constants.webServicesUrl+'/ServicesHotel/ServicesHotelByParam',data);
+        data = {id: null, idHotel: idHotel, idService: null, status: ""};
+        return this.http.post<HotelService[]>(this.constants.webServicesUrl+'/ServicesHotel/ServicesHotelByParam',data);
     }
 }
