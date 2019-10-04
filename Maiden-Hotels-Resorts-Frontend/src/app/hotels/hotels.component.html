@@ -468,10 +468,12 @@
         <td>{{hotel.classification}}</td>
         <td>{{hotel.type}}</td>
         <td>
-            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#read_hotelRoomsModal" (click)="populateReadRoomsForm(i)" >Rooms</button>
-            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#read_hotelServicesModal" (click)="populateReadServicesForm(i)" >Services</button>
-            <button class="btn btn-info mb-2 mr-2 btn-block" data-toggle="modal" data-target="#edit_hotelModal" (click)="populateEditForm(i)" >Edit Hotel</button>
-            <button class="btn btn-danger mb-2 mr-2 btn-block" data-toggle="modal" data-target="#delete_hotelModal" (click)="populateDeleteForm(i)">Delete</button>
+            <div class="btn-group" role="group">
+            <button class="btn btn-info mb-2 mr-2 btn-block fa fa-bed" data-toggle="modal" data-target="#read_hotelRoomsModal" (click)="populateReadRoomsForm(i)" ></button>
+            <button class="btn btn-info mb-2 mr-2 btn-block fa fa-globe " data-toggle="modal" data-target="#read_hotelServicesModal" (click)="populateReadServicesForm(i)" ></button>
+            <button class="btn btn-info mb-2 mr-2 btn-block fa fa-h-square" data-toggle="modal" data-target="#edit_hotelModal" (click)="populateEditForm(i)" ></button>
+            <button class="btn btn-danger mb-2 mr-2 btn-block fa fa-times" data-toggle="modal" data-target="#delete_hotelModal" (click)="populateDeleteForm(i)"></button>
+            </div>
         </td>
       </tr>
     </tbody>

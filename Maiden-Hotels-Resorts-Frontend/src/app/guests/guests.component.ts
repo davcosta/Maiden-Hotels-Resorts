@@ -108,14 +108,17 @@ export class GuestsComponent implements OnInit {
         console.log(responseData);
         if(responseData == -1){
           this.error = "Something went wrong inserting the Guest..."
+          this.success = "";
         }else{
           this.success = "Guest inserted!";
+          this.error ="";
           this.fetchGuests();
         }
         
       },
       error =>{
           this.error = error.message;
+          this.success ="";
       });
   }
 
@@ -137,10 +140,12 @@ export class GuestsComponent implements OnInit {
       ).subscribe(responseData => {
         console.log(responseData);
         this.success = "Guest updated!";
+        this.error ="";
         this.fetchGuests();
       },
       error =>{
           this.error = error.message;
+          this.success = "";
       });
   }
 
@@ -153,10 +158,12 @@ export class GuestsComponent implements OnInit {
     this.guestsService.deleteGuest(this.guests[index].id).subscribe(responseData => {
       console.log(responseData);
       this.success = "Guest Deleted!";
+      this.error = "";
       this.fetchGuests();
     },
     error =>{
         this.error = error.message;
+        this.success = "";
     });
 
   }
@@ -172,6 +179,7 @@ export class GuestsComponent implements OnInit {
       this.guests = [];
       this.guests = guests;
         console.log(this.guests);
+        this.error = "";
     },
     error =>{
         this.error = error.message;

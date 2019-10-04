@@ -118,14 +118,14 @@
     <tr>
       <th>Service ID</th>
       <th>Name</th>
-      <th>Actions</th>
+      <th >Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let service of services; index as i;">
       <td>{{service.id}}</td>
       <td>{{service.name}}</td>
-      <td>
+      <td >
           <button class="btn btn-info mb-2 mr-2 col-4 btn-block" data-toggle="modal" data-target="#edit_serviceModal" (click)="populateEditForm(i)" >Edit</button>
           <button class="btn btn-danger mb-2 mr-2 col-4 btn-block" data-toggle="modal" data-target="#delete_serviceModal" (click)="populateDeleteForm(i)">Delete</button>
       </td>

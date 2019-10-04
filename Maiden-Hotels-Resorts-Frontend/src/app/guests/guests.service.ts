@@ -10,7 +10,7 @@ export class GuestsService {
 
     createAndStoreGuest(firstName: string,
         lastName: string,
-        dateBirth: string,
+        dateOfBirth: string,
         gender: string,
         idNumber: number,
         address: string,
@@ -18,13 +18,23 @@ export class GuestsService {
         email: string,
         status: string){
 
-          let  data = new Guest(null, firstName,lastName,dateBirth,gender, idNumber, address, contactNumber, email, status);
+          let  data: {id: string,
+            firstName: string,
+            lastName: string,
+            dateOfBirth: string,
+            gender: string,
+            idNumber: number,
+            address: string,
+            contactNumber: number,
+            email: string,
+            status: string}//new Guest("", firstName,lastName,dateOfBirth,gender, idNumber, address, contactNumber, email, status);
+            data = {id: "",firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth, gender: gender, idNumber: idNumber, address: address, contactNumber: contactNumber, email: email, status: status};
         return this.http.post(this.constants.webServicesUrl+'/Guests/GuestCreate',data);
     }
 
     updateGuest(id: number,firstName: string,
         lastName: string,
-        dateBirth: string,
+        dateOfBirth: string,
         idNumber: number,
         address: string,
         contactNumber: number,
@@ -36,7 +46,7 @@ export class GuestsService {
                 id: number,
                 firstName: string,
                 lastName: string,
-                dateBirth: string,
+                dateOfBirth: string,
                 gender: string,
                 idNumber: number,
                 address: string,
@@ -44,7 +54,7 @@ export class GuestsService {
                 email: string,
                 status: string
             };
-            data = {id: id,firstName: firstName, lastName: lastName, dateBirth: dateBirth, gender: gender, idNumber: idNumber, address: address, contactNumber: contactNumber, email: email, status: status};
+            data = {id: id,firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth, gender: gender, idNumber: idNumber, address: address, contactNumber: contactNumber, email: email, status: status};
         return this.http.post(this.constants.webServicesUrl+'/Guests/GuestUpdate',data);
     }
 

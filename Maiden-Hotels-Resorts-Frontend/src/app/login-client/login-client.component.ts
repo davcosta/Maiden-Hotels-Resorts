@@ -30,13 +30,14 @@ export class LoginClientComponent implements OnInit {
       'registerIdNumber' : new FormControl(null,Validators.required),
       'registerContactNumber' : new FormControl(null,Validators.required),
       'registerEmail' : new FormControl(null,[Validators.required, Validators.email] ),
-      'registerPassword' : new FormControl(null,Validators.required)
+      'registerPassword' : new FormControl(null,Validators.required),
+      'registerPassword2': new FormControl(null,Validators.required)
     });
 
     
   }
 
-  onCreateRegisterClient(){
+  onRegisterClient(){
     console.log("onRegisterClient");
     //send http request
     this.guestsService.createAndStoreGuest(
@@ -44,7 +45,7 @@ export class LoginClientComponent implements OnInit {
       this.registerForm.value.registerLastName,
       this.registerForm.value.registerDateBirth,
       this.registerForm.value.registerGender,
-      this.registerForm.value.registerNumberId,
+      this.registerForm.value.registerIdNumber,
       this.registerForm.value.registerAddress,
       this.registerForm.value.registerContactNumber,
       this.registerForm.value.registerEmail,
@@ -55,24 +56,25 @@ export class LoginClientComponent implements OnInit {
           this.error = "Something went wrong inserting the guest..."
         }else{
           this.success = "Guest registred!";
-        }
-        this.clientsService.createAndStoreClient(null,
-          0,
-          this.registerForm.value.registerPassword,
-          0
-          
-        ).subscribe(responseData => {
-            console.log(responseData);
-            if(responseData == -1){
-              this.error = "Something went wrong inserting the Client..."
-            }else{
-              this.success = "Client registred!";
-            }
+          this.clientsService.createAndStoreClient(null,
+            Number(responseData),
+            this.registerForm.value.registerPassword,
+            0
             
-          },
-          error =>{
-              this.error = error.message;
-          });
+          ).subscribe(responseData => {
+              console.log(responseData);
+              if(responseData == -1){
+                this.error = "Something went wrong inserting the Client..."
+              }else{
+                this.success = "Client registred!";
+              }
+              
+            },
+            error =>{
+                this.error = error.message;
+            });
+        }
+        
       
       },
       error =>{
